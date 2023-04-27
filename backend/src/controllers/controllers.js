@@ -35,6 +35,6 @@ const updateEstrellas = async (req, res, next) => {
 };
 
 module.exports = {
-    updateEstrellas
+    updateEstrellas,
     getTrabajador
 }
