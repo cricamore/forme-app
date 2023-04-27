@@ -13,7 +13,7 @@ import {
     FormControl,
     InputLabel
 } from '@mui/material';
-import { createTrabjador_Front } from '../functions/sqlFunctions'
+import { createTrabjador_Front, createCliente_Front } from '../functions/sqlFunctions'
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 
@@ -32,6 +32,7 @@ export default function Registro() {
             apellido: '',
             telefono: '',
             direccion: '',
+            correo: '',
             contraseña: '',
         },
 
@@ -41,14 +42,22 @@ export default function Registro() {
             apellido: Yup.string().required("*Complete este campo"),
             telefono: Yup.string().required("*Complete este campo"),
             direccion: Yup.string().required("*Complete este campo"),
+            correo: Yup.string().email('*Campo invalido').required("*Complete este campo"),
             contraseña: Yup.string().required("*Complete este campo"),
         }),
 
         onSubmit: (values) => {
             console.log(formik.values)
-            createTrabjador_Front(values.cedula, values.nombre, values.apellido, values.telefono, values.direccion, values.contraseña)
+            if(tipo == 'cliente') {
+                createCliente_Front(values.cedula, values.nombre, values.apellido, values.telefono, values.direccion, values.correo ,values.contraseña)
+
+            }else{
+                createTrabjador_Front(values.cedula, values.nombre, values.apellido, values.telefono, values.direccion, values.contraseña)
+            }
         }
     });
+
+    console.log(formik.values)
 
 
 
@@ -83,8 +92,8 @@ export default function Registro() {
                                             label="Age"
                                             onChange={handleChange}
                                         >
-                                            <MenuItem value={10}>Cliente</MenuItem>
-                                            <MenuItem value={20}>Trabajador</MenuItem>
+                                            <MenuItem value={'cliente'}>Cliente</MenuItem>
+                                            <MenuItem value={'Trabajador'}>Trabajador</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Grid>
@@ -144,6 +153,21 @@ export default function Registro() {
                                         onChange={formik.handleChange}
                                     />
                                 </Grid>
+                                {tipo == 'cliente' ?
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            error={formik.errors.correo ? true : false}
+                                            name="correo"
+                                            label={formik.errors.correo ? formik.errors.correo : "correo"}
+                                            variant="filled"
+                                            value={formik.values.correo}
+                                            onChange={formik.handleChange}
+                                        />
+                                    </Grid>
+                                    :
+                                    ''
+                                }
                                 {/*<Grid item xs={12}>
                                     <TextField
                                         fullWidth

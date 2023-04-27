@@ -34,7 +34,25 @@ const createTrabajador = async (req, res , next) => {
     }
 }
 
+const createCliente = async (req, res , next) => {
+    const { cedula, direccion, nombre, apellido, telefono, password, correo } = req.body
+    console.log(direccion)
+    try {
+        let sql = `INSERT INTO Persona VALUES (${cedula}, '${direccion}', '${nombre}', '${apellido}',
+         '${telefono}', '${password}'); 
+         INSERT INTO  Usuario_app(id_telefono, cedula, email) VALUES ('${telefono}', ${cedula}, 
+         '${correo}');`
+        const result = await pool.query(sql)
+        console.log(result)
+        
+        res.json({message : 'Cliente creado exitosamente.'})
+    }catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     getTrabajador,
-    createTrabajador
+    createTrabajador,
+    createCliente
 }
