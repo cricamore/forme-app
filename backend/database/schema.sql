@@ -39,8 +39,7 @@ CREATE TABLE Usuario_app(
     CONSTRAINT fk_cedula
         FOREIGN KEY (cedula)
         REFERENCES Persona(cedula),
-    email VARCHAR(60),
-    medio_pago VARCHAR(20)
+    email VARCHAR(60)
 );
 
 CREATE TABLE Labor(
@@ -94,10 +93,10 @@ INSERT INTO Labor(id_trabajador,precioHora,nombreLabor) VALUES ((SELECT MAX(id_t
 INSERT INTO Trabajador_labor(id_labor,id_trabajador) VALUES ((SELECT MAX(id_labor) FROM Labor),(SELECT MAX(id_trabajador) FROM Trabajador));
 
 INSERT INTO Persona VALUES(1005965156, 'cra15#16-02','Santiago','Trujillo','3154148738', '10987654');
-INSERT INTO Usuario_app(id_telefono, cedula, email, medio_pago) VALUES ('3154148738', 1005965156, 'asd@gmail.com', 'Masterdcard');
+INSERT INTO Usuario_app(id_telefono, cedula, email) VALUES ('3154148738', 1005965156, 'asd@gmail.com');
 
 INSERT INTO Persona VALUES(1006955156, 'cra40#16-02','Hassen','Ortiz','3214148738', '098765432');
-INSERT INTO Usuario_app(id_telefono, cedula, email, medio_pago) VALUES ('3214148738', 1006955156, 'das@gmail.com', 'Visa');
+INSERT INTO Usuario_app(id_telefono, cedula, email) VALUES ('3214148738', 1006955156, 'das@gmail.com');
 
 INSERT INTO Persona VALUES(1115965561, 'Cl 16#15-20','Marta','Rodriguez','3004148727', 'qwertyuiop');
 INSERT INTO Trabajador(cedula, estrellas) VALUES (1115965561, 4.0);
