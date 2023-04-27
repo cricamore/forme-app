@@ -15,10 +15,13 @@ import {
 } from '@mui/material';
 import { createTrabjador_Front, createCliente_Front } from '../functions/sqlFunctions'
 import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
+import styles from '@project/styles/Registro.module.css'
 import * as Yup from 'yup'
 
 
 export default function Registro() {
+    const router = useRouter();
     const [tipo, setTipo] = React.useState('');
 
     const handleChange = (event) => {
@@ -42,28 +45,37 @@ export default function Registro() {
             apellido: Yup.string().required("*Complete este campo"),
             telefono: Yup.string().required("*Complete este campo"),
             direccion: Yup.string().required("*Complete este campo"),
-            correo: Yup.string().email('*Campo invalido').required("*Complete este campo"),
+            // correo: Yup.string().email('*Campo invalido').required("*Complete este campo"),
             contraseña: Yup.string().required("*Complete este campo"),
         }),
 
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             console.log(formik.values)
-            if(tipo == 'cliente') {
-                createCliente_Front(values.cedula, values.nombre, values.apellido, values.telefono, values.direccion, values.correo ,values.contraseña)
-
-            }else{
-                createTrabjador_Front(values.cedula, values.nombre, values.apellido, values.telefono, values.direccion, values.contraseña)
+            if (tipo == 'cliente') {
+                createCliente_Front(values.cedula, values.nombre, values.apellido, values.telefono, values.direccion, values.correo, values.contraseña)
             }
+
+            if (tipo == 'trabajador') {
+                let res = await createTrabjador_Front(values.cedula, values.nombre, values.apellido, values.telefono, values.direccion, values.contraseña)
+                if (res == 'success') {
+                    router.push({
+                        pathname: '/workerForm',
+                        query: { id: values.cedula },
+                    })
+                }
+            }
+
+
         }
     });
 
-    console.log(formik.values)
+
 
 
 
     return (
-        <div>
-            <Container sx={{ padding: '2%', background: '#362900', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div className={styles.miclase}>
+            <Container sx={{ padding: '2%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Box sx={{ borderRadius: '4%', padding: '10%', width: '60%', background: '#F6BE00' }}>
                     <form onSubmit={formik.handleSubmit}>
                         <Stack
@@ -93,7 +105,7 @@ export default function Registro() {
                                             onChange={handleChange}
                                         >
                                             <MenuItem value={'cliente'}>Cliente</MenuItem>
-                                            <MenuItem value={'Trabajador'}>Trabajador</MenuItem>
+                                            <MenuItem value={'trabajador'}>Trabajador</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Grid>
@@ -124,10 +136,11 @@ export default function Registro() {
                                 <Grid item xs={6}>
                                     <TextField
                                         fullWidth
+                                        error={formik.errors.apellido ? true : false}
                                         name="apellido"
                                         value={formik.values.apellido}
                                         onChange={formik.handleChange}
-                                        label="Apellido"
+                                        label={formik.errors.apellido ? formik.errors.apellido : "Apellido"}
                                         variant="filled"
                                     />
                                 </Grid>
@@ -217,7 +230,7 @@ export default function Registro() {
                                 <Typography>He leído los <span style={{ fontWeight: 'bold' }}>términos y condiciones.</span></Typography>
                             </Box>
                             <Button
-                                type='submit'
+                                type="submit"
                                 variant="contained"
                                 size="large"
                                 sx={{ background: '#362900', scale: '100%' }}>

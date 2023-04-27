@@ -20,7 +20,6 @@ const getTrabajador = async (req, res , next) => {
 
 const createTrabajador = async (req, res , next) => {
     const { cedula, direccion, nombre, apellido, telefono, password } = req.body
-    console.log(direccion)
     try {
         let sql = `INSERT INTO Persona VALUES (${cedula}, '${direccion}', '${nombre}', '${apellido}',
          '${telefono}', '${password}'); 
@@ -28,7 +27,7 @@ const createTrabajador = async (req, res , next) => {
         const result = await pool.query(sql)
         console.log(result)
         
-        res.json({message : 'Trabajador creado exitosamente.'})
+        res.json({message : 'success'})
     }catch (error) {
         next(error)
     }
@@ -36,7 +35,6 @@ const createTrabajador = async (req, res , next) => {
 
 const createCliente = async (req, res , next) => {
     const { cedula, direccion, nombre, apellido, telefono, password, correo } = req.body
-    console.log(direccion)
     try {
         let sql = `INSERT INTO Persona VALUES (${cedula}, '${direccion}', '${nombre}', '${apellido}',
          '${telefono}', '${password}'); 
@@ -51,8 +49,24 @@ const createCliente = async (req, res , next) => {
     }
 }
 
+
+const addDescription = async (req, res , next) => {
+    const { descripcion, cedula } = req.body
+    console.log(descripcion, cedula)
+    try {
+        let sql = `UPDATE trabajador SET descripcion = '${descripcion}' WHERE cedula = ${cedula};`
+        const result = await pool.query(sql)
+        console.log(result)
+        
+        res.json({message : 'success.'})
+    }catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     getTrabajador,
     createTrabajador,
-    createCliente
+    createCliente, 
+    addDescription
 }

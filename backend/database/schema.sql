@@ -30,7 +30,7 @@ CREATE TABLE Trabajador(
         REFERENCES Persona(cedula),
     ocupado BOOLEAN DEFAULT FALSE,
     estrellas FLOAT DEFAULT 4.0,
-    descripcion VARCHAR(500),
+    descripcion VARCHAR(500)
 );
 
 CREATE TABLE Usuario_app(
