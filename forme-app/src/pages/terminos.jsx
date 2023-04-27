@@ -12,6 +12,7 @@ export default function Terminos() {
         </Typography>
         <Box sx={{borderRadius: '4%', padding: '8%', maxWidth: 460,  maxHeight: 500,background: '#F6BE00', display: 'flex', boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.5)'}}>
                 <Box sx={{overflowY: 'auto'}}>
+                    
                     <h4>
                         Responsabilidades del usuario:
                     </h4> 
