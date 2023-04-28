@@ -1,8 +1,10 @@
 const pool = require('../connection_db')
 
 const getTrabajador = async (req, res , next) => {
+    const idTrabajador = req.params.id_trabajador;
     const { cedula, password } = req.body
     try {
+        const idTrabajador = req.params.id_trabajador;
         let sql = `SELECT * FROM Persona NATURAL JOIN Trabajador AS t WHERE t.cedula='${cedula}' AND password='${password}';`
         const result = await pool.query(sql)
         
@@ -11,12 +13,13 @@ const getTrabajador = async (req, res , next) => {
                 message:"Trabajador no encontrado"
             })
         }
-
+        
         res.json(result.rows)
     }catch (error) {
         next(error)
     }
 }
+
 
 const createTrabajador = async (req, res , next) => {
     const { cedula, direccion, nombre, apellido, telefono, password } = req.body
@@ -69,4 +72,8 @@ module.exports = {
     createTrabajador,
     createCliente, 
     addDescription
+}
+module.exports = {
+    updateEstrellas,
+    getTrabajador
 }
