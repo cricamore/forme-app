@@ -73,7 +73,4 @@ module.exports = {
     createCliente, 
     addDescription
 }
-module.exports = {
-    updateEstrellas,
-    getTrabajador
-}
+
