@@ -209,8 +209,7 @@ export default function Registro() {
                             </Grid>
                             <Box sx={{ display: 'flex', ustifyContent: 'center', alignItems: 'center' }}>
 
-
-                                <Stack
+                               <Stack
                                     direction="row"
                                     justifyContent="center"
                                     alignItems="center"
