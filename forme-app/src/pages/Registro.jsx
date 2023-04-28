@@ -227,7 +227,17 @@ export default function Registro() {
                                         color: '#fff',
                                     },
                                 }} />
-                                <Typography>He leído los <span style={{ fontWeight: 'bold' }}>términos y condiciones.</span></Typography>
+                                <Typography>He leído los&nbsp;  
+                                    <a 
+                                    href='/terminos'
+                                    target="_blank"
+                                    > 
+                                    <span style={{ fontWeight: 'bold' }}>
+                                        términos y condiciones.
+                                    </span>
+                                    </a>
+                                </Typography>
+                                    
                             </Box>
                             <Button
                                 type="submit"

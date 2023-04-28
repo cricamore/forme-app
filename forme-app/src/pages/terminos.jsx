@@ -56,6 +56,50 @@ export default function Terminos() {
                         <p>
                             La empresa no será responsable de ningún daño o pérdida que el usuario pueda sufrir al utilizar la aplicación, excepto en los casos en que la empresa haya actuado con negligencia o incumplido alguna de sus obligaciones legales.
                         </p>
+                    
+                    <h4>
+                    Uso de la aplicación:
+                    </h4>
+                    <p>
+                    Los usuarios deben utilizar la aplicación únicamente para fines legales y no pueden utilizarla para enviar contenido ilegal, fraudulento, difamatorio, obsceno o inapropiado.
+                    </p>
+
+                    <h4>
+                        Privacidad:
+                    </h4>
+                    <p>
+                        Los usuarios deben utilizar la aplicación únicamente para fines legales y no pueden utilizarla para enviar contenido ilegal, fraudulento, difamatorio, obsceno o inapropiado.
+                    </p>
+                    
+                    <h4>
+                        Modificaciones de los términos y condiciones:
+                    </h4>
+                    <p>
+                    La empresa se reserva el derecho de modificar los términos y condiciones en cualquier momento sin previo aviso. Los usuarios deben revisar regularmente los términos y condiciones actualizados para asegurarse de que están al día con los cambios.
+                    </p>
+
+                    <h4>
+                        Resolución de disputas:
+                    </h4>
+                    <p>
+                    Cualquier disputa entre la empresa y el usuario se resolverá de manera justa y equitativa, y de acuerdo con las leyes y regulaciones aplicables en la jurisdicción correspondiente.
+                    </p>
+
+                    <h4>
+                    Terminación de la cuenta:
+                    </h4>
+
+                    <p>
+                    La empresa se reserva el derecho de terminar la cuenta del usuario en caso de que este incumpla con los términos y condiciones de la aplicación.
+                    </p>
+
+                    <h4>
+                    Comentarios y sugerencias:
+                    </h4>
+                    <p>
+                    Los usuarios pueden enviar comentarios y sugerencias a la empresa para mejorar la aplicación y su experiencia de usuario. La empresa se reserva el derecho de utilizar estos comentarios y sugerencias de manera libre y sin restricciones.
+                    </p>
+
                 </Box>
         </Box>
         </div>
