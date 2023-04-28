@@ -20,20 +20,59 @@ const getTrabajador = async (req, res , next) => {
     }
 }
 
-const updateEstrellas = async (req, res, next) => {
-  const { estrellas } = req.body;
-  const { id_trabajador } = req.params;
 
-  try {
-    let sql = `UPDATE Trabajador SET estrellas=((${estrellas}+estrellas)/2) 
-               WHERE id_trabajador IN (SELECT id_trabajador FROM Usuario_trabajador NATURAL JOIN Trabajador);`
-    const result = await pool.query(sql,[estrellas, id_trabajador]);
-    res.json(result.rows);
-  } catch (error) {
-    next(error);
-  }
-};
+const createTrabajador = async (req, res , next) => {
+    const { cedula, direccion, nombre, apellido, telefono, password } = req.body
+    try {
+        let sql = `INSERT INTO Persona VALUES (${cedula}, '${direccion}', '${nombre}', '${apellido}',
+         '${telefono}', '${password}'); 
+         INSERT INTO Trabajador(cedula) VALUES (${cedula});`
+        const result = await pool.query(sql)
+        console.log(result)
+        
+        res.json({message : 'success'})
+    }catch (error) {
+        next(error)
+    }
+}
 
+const createCliente = async (req, res , next) => {
+    const { cedula, direccion, nombre, apellido, telefono, password, correo } = req.body
+    try {
+        let sql = `INSERT INTO Persona VALUES (${cedula}, '${direccion}', '${nombre}', '${apellido}',
+         '${telefono}', '${password}'); 
+         INSERT INTO  Usuario_app(id_telefono, cedula, email) VALUES ('${telefono}', ${cedula}, 
+         '${correo}');`
+        const result = await pool.query(sql)
+        console.log(result)
+        
+        res.json({message : 'Cliente creado exitosamente.'})
+    }catch (error) {
+        next(error)
+    }
+}
+
+
+const addDescription = async (req, res , next) => {
+    const { descripcion, cedula } = req.body
+    console.log(descripcion, cedula)
+    try {
+        let sql = `UPDATE trabajador SET descripcion = '${descripcion}' WHERE cedula = ${cedula};`
+        const result = await pool.query(sql)
+        console.log(result)
+        
+        res.json({message : 'success.'})
+    }catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {
+    getTrabajador,
+    createTrabajador,
+    createCliente, 
+    addDescription
+}
 module.exports = {
     updateEstrellas,
     getTrabajador
