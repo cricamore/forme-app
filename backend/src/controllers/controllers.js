@@ -46,7 +46,47 @@ const createCliente = async (req, res , next) => {
         const result = await pool.query(sql)
         console.log(result)
         
-        res.json({message : 'Cliente creado exitosamente.'})
+        res.json({message : 'success'})
+    }catch (error) {
+        next(error)
+    }
+}
+
+const loginCliente = async (req, res , next) => {
+    const { telefono, password } = req.body
+    try {
+        let sql =`SELECT * FROM Persona NATURAL JOIN Usuario_app WHERE id_telefono='${telefono}'
+         AND password='${password}';`
+        
+        const result = await pool.query(sql)
+        console.log(result)
+        if(result.rows.length === 0){
+            return res.status(404).json({
+                message:"Trabajador no encontrado"
+            })
+        }
+        
+        res.json({message : 'existe'})
+    }catch (error) {
+        next(error)
+    }
+}
+
+const loginTrabajador = async (req, res , next) => {
+    const { cedula, password } = req.body
+    try {
+       let sql = `SELECT * FROM Persona NATURAL JOIN Trabajador AS t WHERE 
+        t.cedula='${cedula}' AND password='${password}';`
+        const result = await pool.query(sql)
+        console.log(result)
+        
+        if(result.rows.length === 0){
+            return res.status(404).json({
+                message:"Trabajador no encontrado"
+            })
+        }
+
+        res.json({message : 'existe'})
     }catch (error) {
         next(error)
     }
@@ -71,6 +111,8 @@ module.exports = {
     getTrabajador,
     createTrabajador,
     createCliente, 
-    addDescription
+    addDescription,
+    loginCliente,
+    loginTrabajador
 }
 
