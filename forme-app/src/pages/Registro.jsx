@@ -65,7 +65,6 @@ export default function Registro() {
         }),
 
         onSubmit: async (values) => {
-            console.log(formik.values)
             if (tipo == 'cliente') {
               let res = await  createCliente_Front(values.cedula, values.nombre, values.apellido, values.telefono, values.direccion, values.correo, values.contraseña)
                 if (res == 'success') {
