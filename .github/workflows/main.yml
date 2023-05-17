@@ -2,7 +2,7 @@ name: Check Docker Image
 
 on:
   push:
-    branches: [ gitactions ]
+    branches: [ main ]
 
 jobs:
   check-docker-image:
@@ -14,5 +14,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18
-      - name: Build Docker image
-        run: docker-compose up -d
+      - name: Notify slack
+        env:
+          SLACK_BOT_TOKEN: a422442db86654dee262b466ced47d77
+        uses: pullreminders/slack-action@master
+        with:
+          args: '{\"channel\":\"C058ZPTE80Y\",\"text\":\"Hello world\"}'
