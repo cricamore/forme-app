@@ -107,12 +107,27 @@ const addDescription = async (req, res , next) => {
     }
 }
 
+const createReview = async (req, res , next) => {
+    const { resenia, cedula } = req.body
+    console.log(resenia, cedula)
+    try {
+        let sql = `UPDATE trabajador SET resenia = CONCAT(resenia, '${resenia}') WHERE cedula = ${cedula};`
+        const result = await pool.query(sql)
+        console.log(result)
+        
+        res.json({message : 'success.'})
+    }catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     getTrabajador,
     createTrabajador,
     createCliente, 
     addDescription,
     loginCliente,
-    loginTrabajador
+    loginTrabajador,
+    createReview
 }
 

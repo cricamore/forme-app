@@ -163,10 +163,44 @@ async function login_cliente(telefono, password) {
     }
 }
 
+async function addReview_Front(cedula, resenia) {
+    console.log("aa"+resenia)
+    try {
+        const response = await fetch(`http://localhost:4000/review`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cedula,
+                resenia
+            }),
+        });
+
+        const data = await response.json(); // convierte la respuesta del servidor a JSON
+
+        if(response.status === 200) {
+            console.log("Entré");
+            alert(data.message);
+        } else {
+            console.log("Entré2")
+            alert("Ha ocurrido un error.");
+        }
+
+        // maneja la respuesta del servidor según sea necesario
+        console.log(data);
+
+    } catch (error) {
+        // maneja cualquier error que se produzca al enviar la solicitud
+        console.error(error);
+    }
+}
+
 export {
     createTrabjador_Front,
     createCliente_Front, 
     addDecripcion_Front,
     login_cliente,
-    login_trabajador
+    login_trabajador,
+    addReview_Front
 }
