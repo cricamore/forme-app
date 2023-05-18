@@ -139,15 +139,13 @@ const getTrabajadorInfo = async (req, res, next) => {
 }
 
 const OcuparTrabajador = async (req, res, next) => {
-    
-    
     try {
-        const { valor } = req.body
-        const { cedula } = req.params
+        const { valor } = req.body;
+        const { cedula } = req.params;
 
-        let sql = `UPDATE trabajador SET ocupado = '${valor}' WHERE cedula = '${cedula}';`
-        const result = await pool.query(sql)
-        console.log(result.rows)
+        const sql = 'UPDATE trabajador SET ocupado = $1 WHERE cedula = $2 RETURNING *';
+        const result = await pool.query(sql, [valor, cedula]);
+        // console.log(result.rows);
 
         if (result.rows.length === 0) {
             return res.status(404).json({
@@ -155,7 +153,25 @@ const OcuparTrabajador = async (req, res, next) => {
             })
         }
 
-        res.json(result.rows[0])
+        res.json(result.rows);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const getLabor = async (req, res, next) => {
+    try {
+        const { labor } = req.params
+        let sql = `SELECT * FROM Persona NATURAL JOIN Trabajador NATURAL JOIN Labor WHERE nombreLabor = '${labor}'`
+        const result = await pool.query(sql)
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                message: "labor no encontrado"
+            })
+        }
+
+        res.json(result.rows)
     } catch (error) {
         next(error)
     }
@@ -171,6 +187,7 @@ module.exports = {
     loginTrabajador,
     getTrabajadorFullInfo,
     getTrabajadorInfo,
-    OcuparTrabajador
+    OcuparTrabajador,
+    getLabor
 }
 

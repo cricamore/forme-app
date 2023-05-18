@@ -1,24 +1,46 @@
 import React, { useEffect, useState } from 'react'
-import Carta_Trabajador from '@project/components/Carta_Trabajador'
-import { Trabajadores_info } from '../functions/sqlFunctions'
-import { 
-    Box, 
-    Stack, 
-    Typography, 
+import { Trabajadores_info, contratar_trabajador, get_labor } from '../functions/sqlFunctions'
+import {
+    Box,
+    Stack,
+    Typography,
     Button,
     Dialog,
     DialogTitle,
     DialogContent,
-    DialogActions
+    DialogActions,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem
 } from '@mui/material';
 
 
 export default function Home_user() {
 
     const [trabajadores, setTrabajadores] = useState([])
+    const [labor, setLabor] = React.useState('');
+    const handleChange = (event) => {
+        setLabor(event.target.value);
+    };
 
+    const filtro = async () => {
+        console.log(labor)
+        if (labor == 'Ver todos') {
+            const res = await Trabajadores_info(labor)
+            console.log(res)
+            setTrabajadores(res)
+        } else {
+            const res = await get_labor(labor)
+            console.log(res)
+            setTrabajadores(res)
+
+        }
+
+    }
 
     useEffect(() => {
+
         const fetchData = async () => {
             try {
                 const response = await Trabajadores_info();
@@ -28,16 +50,39 @@ export default function Home_user() {
             }
         };
 
+
+
         fetchData();
+
         console.log(trabajadores)
     }, []);
 
     return (
-        <>
+        <div style={{ padding: '5rem' }}>
+
+            <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Labor</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={labor}
+                        label="Labor"
+                        onChange={handleChange}
+                    >
+                        <MenuItem value={'Ver todos'}>Ver todos</MenuItem>
+                        <MenuItem value={'Profesor'}>Profesor</MenuItem>
+                        <MenuItem value={'Mecanico'}>Mecanico</MenuItem>
+                        <MenuItem value={'Programador'}>Programador</MenuItem>
+                    </Select>
+                </FormControl>
+                <Button onClick={filtro} >Filtrar</Button>
+            </Box>
+
             <Box sx={{ width: '100%', padding: '5%', display: 'flex', flexWrap: "wrap", justifyContent: 'center', alignItems: 'center' }}>
 
                 {
-                    trabajadores.map((trabajadores) => (
+                    trabajadores && trabajadores.map((trabajadores) => (
                         <Box key={trabajadores.cedula} sx={{ margin: '5%', padding: '5%', background: '#381810', color: "#fff", borderRadius: '30px' }}>
                             <Stack direction='row' spacing={2}>
                                 <Typography>{trabajadores.nombre}</Typography>
@@ -51,19 +96,16 @@ export default function Home_user() {
                                 <Typography>Estado : </Typography>
                                 <Typography>{trabajadores.ocupado ? 'Ocupado' : 'Libre'}</Typography>
                             </Stack>
-                            <AlertDialog />
+                            <AlertDialog cedula={trabajadores.cedula} />
                         </Box>
                     ))
                 }
             </Box>
-        </>
+        </div>
     )
 }
 
-function AlertDialog({ estado, descripcion }) {
-    const handleClick = () => {
-        estado("Nuevo dato");
-    };
+function AlertDialog({ cedula }) {
 
     const [open, setOpen] = React.useState(false);
 
@@ -71,18 +113,9 @@ function AlertDialog({ estado, descripcion }) {
         setOpen(true);
     };
 
-    const handleCloseAcept = () => {
-        estado('valido');
-        setOpen(false);
-    };
-
-    const handleCloseDenied = () => {
-        estado('Novalido');
-        setOpen(false);
-    };
-
     const handleClose = () => {
         setOpen(false);
+        contratar_trabajador(cedula, true)
     };
 
 

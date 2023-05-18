@@ -179,11 +179,72 @@ async function Trabajadores_info() {
     }
 }
 
+async function contratar_trabajador(cedula,valor) {
+
+    try {
+        const response = await fetch(`http://localhost:4000/contratar/${cedula}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                valor
+            }),
+        });
+
+        const data = await response.json(); // convierte la respuesta del servidor a JSON
+
+        if(response.status === 200) {
+            alert(data.message);
+            // return data.message
+        } else {
+            alert("Ha ocurrido un error.");
+        }
+
+        // maneja la respuesta del servidor según sea necesario
+        //console.log(data);
+
+    } catch (error) {
+        // maneja cualquier error que se produzca al enviar la solicitud
+        console.error(error);
+    }
+}
+
+async function get_labor(labor) {
+
+    try {
+        const response = await fetch(`http://localhost:4000/trabajadorLabor/${labor}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const data = await response.json(); // convierte la respuesta del servidor a JSON
+
+        if(response.status === 200) {
+            console.log(data);
+            return data;
+        } else {
+            alert("Ha ocurrido un error.");
+        }
+
+        // maneja la respuesta del servidor según sea necesario
+        console.log(data);
+
+    } catch (error) {
+        // maneja cualquier error que se produzca al enviar la solicitud
+        console.error(error);
+    }
+}
+
 export {
     createTrabjador_Front,
     createCliente_Front, 
     addDecripcion_Front,
     login_cliente,
     login_trabajador,
-    Trabajadores_info
+    Trabajadores_info,
+    contratar_trabajador,
+    get_labor
 }
