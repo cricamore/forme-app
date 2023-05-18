@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getTrabajador, createTrabajador, createCliente, addDescription, loginCliente, loginTrabajador, createReview } = require('../controllers/controllers.js')
+const { getTrabajador, createTrabajador, createCliente, addDescription, loginCliente, loginTrabajador, createReview, getReview  } = require('../controllers/controllers.js')
 
 
 
@@ -13,6 +13,7 @@ router.post('/adddescription', addDescription)
 router.post('/logincliente',loginCliente)
 router.post('/logintrabajador',loginTrabajador)
 router.post('/review',createReview)
+router.get('/review',getReview)
 
 
 module.exports = router

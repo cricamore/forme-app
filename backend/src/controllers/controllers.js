@@ -111,7 +111,7 @@ const createReview = async (req, res , next) => {
     const { resenia, cedula } = req.body
     console.log(resenia, cedula)
     try {
-        let sql = `UPDATE trabajador SET resenia = CONCAT(resenia, '${resenia}') WHERE cedula = ${cedula};`
+        let sql = `UPDATE trabajador SET resenia = CONCAT(resenia, '|${resenia}') WHERE cedula = ${cedula};`
         const result = await pool.query(sql)
         console.log(result)
         
@@ -119,6 +119,39 @@ const createReview = async (req, res , next) => {
     }catch (error) {
         next(error)
     }
+}
+
+const getReview = async (req, res, next) => {
+  const { cedula } = req.query;
+  try {
+    let sql = `SELECT resenia FROM trabajador WHERE cedula = ${cedula};`;
+    const result = await pool.query(sql);
+    console.log(result);
+
+    if (result.rows.length === 0) {
+      res.json({ review: null }); // No se encontró una reseña para la cédula dada
+    } else {
+      const reseniasConcatenadas = result.rows[0].resenia;
+      const resenias = reseniasConcatenadas.split('|');
+
+      res.json({ review: resenias }); // Se encontró una reseña para la cédula dada
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+module.exports = {
+    getTrabajador,
+    createTrabajador,
+    createCliente, 
+    addDescription,
+    loginCliente,
+    loginTrabajador,
+    getReview,
+    createReview
 }
 
 module.exports = {
