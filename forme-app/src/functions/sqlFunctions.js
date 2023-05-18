@@ -164,7 +164,6 @@ async function login_cliente(telefono, password) {
 }
 
 async function addReview_Front(cedula, resenia) {
-    console.log("aa"+resenia)
     try {
         const response = await fetch(`http://localhost:4000/review`, {
             method: 'POST',
@@ -180,21 +179,40 @@ async function addReview_Front(cedula, resenia) {
         const data = await response.json(); // convierte la respuesta del servidor a JSON
 
         if(response.status === 200) {
-            console.log("Entré");
             alert(data.message);
         } else {
-            console.log("Entré2")
             alert("Ha ocurrido un error.");
         }
-
-        // maneja la respuesta del servidor según sea necesario
         console.log(data);
-
     } catch (error) {
-        // maneja cualquier error que se produzca al enviar la solicitud
         console.error(error);
     }
 }
+
+async function getReview_Front(cedula) {
+  try {
+    const response = await fetch(`http://localhost:4000/review?cedula=${cedula}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      const reviewsArray = data.review.map((review, index) => ({ name: 'Usuario', text: review }));
+      console.log("XD " + reviewsArray)
+      return reviewsArray;
+    } else {
+      throw new Error('Failed to fetch review.');
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching the review.');
+  }
+}
+
 
 export {
     createTrabjador_Front,
@@ -202,5 +220,6 @@ export {
     addDecripcion_Front,
     login_cliente,
     login_trabajador,
-    addReview_Front
+    addReview_Front,
+    getReview_Front
 }
