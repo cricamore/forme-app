@@ -1,6 +1,3 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import Review from './src/pages/Review';
 import '@testing-library/jest-dom/extend-expect';
 const { addReview_Front } = require('./src/functions/sqlFunctions');
 
