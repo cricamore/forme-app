@@ -138,6 +138,29 @@ const getTrabajadorInfo = async (req, res, next) => {
     }
 }
 
+const OcuparTrabajador = async (req, res, next) => {
+    
+    
+    try {
+        const { valor } = req.body
+        const { cedula } = req.params
+
+        let sql = `UPDATE trabajador SET ocupado = '${valor}' WHERE cedula = '${cedula}';`
+        const result = await pool.query(sql)
+        console.log(result.rows)
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                message: "not found"
+            })
+        }
+
+        res.json(result.rows[0])
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 module.exports = {
     getTrabajador,
@@ -147,6 +170,7 @@ module.exports = {
     loginCliente,
     loginTrabajador,
     getTrabajadorFullInfo,
-    getTrabajadorInfo
+    getTrabajadorInfo,
+    OcuparTrabajador
 }
 

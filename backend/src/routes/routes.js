@@ -7,7 +7,8 @@ const {
     loginCliente,
     loginTrabajador,
     getTrabajadorFullInfo,
-    getTrabajadorInfo
+    getTrabajadorInfo,
+    OcuparTrabajador
 } = require('../controllers/controllers.js')
 
 
@@ -23,6 +24,7 @@ router.post('/logincliente', loginCliente)
 router.post('/logintrabajador', loginTrabajador)
 router.get('/trabajadores', getTrabajadorFullInfo)
 router.post('/trabajadores/:cedula', getTrabajadorInfo)
+router.post('/contratar/:cedula', OcuparTrabajador)
 
 
 module.exports = router
