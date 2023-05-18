@@ -163,10 +163,27 @@ async function login_cliente(telefono, password) {
     }
 }
 
+async function trabajadores_Front() {
+    try {
+      const response = await fetch(`http://localhost:4000/trabajadores`);
+      const data = await response.json();
+  
+      if (response.status === 200) {
+        return data;
+      } else {
+        alert("Ha ocurrido un error.");
+      }
+  
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 export {
     createTrabjador_Front,
     createCliente_Front, 
     addDecripcion_Front,
     login_cliente,
-    login_trabajador
+    login_trabajador,
+    trabajadores_Front
 }

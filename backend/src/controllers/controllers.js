@@ -20,7 +20,6 @@ const getTrabajador = async (req, res , next) => {
     }
 }
 
-
 const createTrabajador = async (req, res , next) => {
     const { cedula, direccion, nombre, apellido, telefono, password } = req.body
     try {
@@ -107,12 +106,31 @@ const addDescription = async (req, res , next) => {
     }
 }
 
+const getTrabajadores = async (req, res, next) => {
+    try {
+        let sql = `SELECT nombre FROM Persona NATURAL JOIN Trabajador`
+        const result = await pool.query(sql)
+        
+        if(result.rows.length === 0){
+            return res.status(404).json({
+                message:"No se encontraron trabajadores"
+            })
+        }
+        
+        res.json(result.rows)
+    } catch (error) {
+        next(error)
+    }
+}
+
+  
 module.exports = {
     getTrabajador,
     createTrabajador,
     createCliente, 
     addDescription,
     loginCliente,
-    loginTrabajador
+    loginTrabajador,
+    getTrabajadores
 }
 
