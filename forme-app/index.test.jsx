@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-const { addReview_Front, getReview_Front, createTrabjador_Front,createCliente_Front,addDecripcion_Front,login_trabajador, login_cliente, trabajadores_Front } = require('./src/functions/sqlFunctions');
+const { addReview_Front, getReview_Front, createTrabjador_Front,createCliente_Front,addDecripcion_Front,login_trabajador, login_cliente, trabajadores_Front, Trabajadores_info, get_labor,contratar_trabajador } = require('./src/functions/sqlFunctions');
 
 
 describe('addReview_Front', () => {
@@ -634,6 +634,197 @@ describe('trabajadores_Front', () => {
     expect(global.console.error).toHaveBeenCalledWith(new Error('Error de red'));
   });
 });
+
+
+
+
+//Trabajadores_info
+
+
+describe('Trabajadores_info', () => {
+  test('realiza una solicitud GET al servidor y devuelve los datos si la respuesta es exitosa', async () => {
+    // Mockear la función fetch para simular una respuesta exitosa
+    global.fetch = jest.fn().mockResolvedValue({
+      status: 200,
+      json: jest.fn().mockResolvedValue([
+        { id: 1, nombre: 'John', apellido: 'Doe' },
+        { id: 2, nombre: 'Jane', apellido: 'Smith' },
+      ]),
+    });
+
+    // Llamar a la función
+    const result = await Trabajadores_info();
+
+    // Verificar que se haya llamado a fetch con el URL correcto
+    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/trabajadores');
+
+    // Verificar que se haya devuelto los datos correctos
+    expect(result).toEqual([
+      { id: 1, nombre: 'John', apellido: 'Doe' },
+      { id: 2, nombre: 'Jane', apellido: 'Smith' },
+    ]);
+  });
+
+  test('maneja errores al realizar la solicitud', async () => {
+    // Mockear la función fetch para simular un error al realizar la solicitud
+    global.fetch = jest.fn().mockRejectedValue(new Error('Error de red'));
+
+    // Mockear la función console.error
+    global.console.error = jest.fn();
+
+    // Llamar a la función
+    await Trabajadores_info();
+
+    // Verificar que se haya mostrado el mensaje de error
+    expect(global.console.error).toHaveBeenCalledWith(new Error('Error de red'));
+  });
+});
+
+
+
+//get_labor
+
+
+
+describe('get_labor', () => {
+  test('realiza una solicitud POST al servidor con el parámetro labor y devuelve los datos si la respuesta es exitosa', async () => {
+    // Mockear la función fetch para simular una respuesta exitosa
+    global.fetch = jest.fn().mockResolvedValue({
+      status: 200,
+      json: jest.fn().mockResolvedValue([
+        { id: 1, nombre: 'John', apellido: 'Doe' },
+        { id: 2, nombre: 'Jane', apellido: 'Smith' },
+      ]),
+    });
+
+    // Mockear la función console.log
+    global.console.log = jest.fn();
+
+    // Datos de ejemplo
+    const labor = 'Electricista';
+
+    // Llamar a la función
+    const result = await get_labor(labor);
+
+    // Verificar que se haya llamado a fetch con los parámetros correctos
+    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/trabajadorLabor/Electricista', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Verificar que se haya devuelto los datos correctos
+    expect(result).toEqual([
+      { id: 1, nombre: 'John', apellido: 'Doe' },
+      { id: 2, nombre: 'Jane', apellido: 'Smith' },
+    ]);
+
+    // Verificar que se haya mostrado los datos en la consola
+    expect(global.console.log).toHaveBeenCalledWith([
+      { id: 1, nombre: 'John', apellido: 'Doe' },
+      { id: 2, nombre: 'Jane', apellido: 'Smith' },
+    ]);
+  });
+
+  test('maneja errores al realizar la solicitud', async () => {
+    // Mockear la función fetch para simular un error al realizar la solicitud
+    global.fetch = jest.fn().mockRejectedValue(new Error('Error de red'));
+
+    // Mockear la función console.error
+    global.console.error = jest.fn();
+
+    // Datos de ejemplo
+    const labor = 'Electricista';
+
+    // Llamar a la función
+    await get_labor(labor);
+
+    // Verificar que se haya mostrado el mensaje de error
+    expect(global.console.error).toHaveBeenCalledWith(new Error('Error de red'));
+  });
+});
+
+
+
+//contratar_trabajador
+
+
+describe('contratar_trabajador', () => {
+  test('realiza una solicitud POST al servidor con los parámetros cedula y valor y muestra el mensaje si la respuesta es exitosa', async () => {
+    // Mockear la función fetch para simular una respuesta exitosa
+    global.fetch = jest.fn().mockResolvedValue({
+      status: 200,
+      json: jest.fn().mockResolvedValue({ message: 'Trabajador contratado exitosamente' }),
+    });
+
+    // Mockear la función alert
+    global.alert = jest.fn();
+
+    // Datos de ejemplo
+    const cedula = '123456789';
+    const valor = 100;
+
+    // Llamar a la función
+    await contratar_trabajador(cedula, valor);
+
+    // Verificar que se haya llamado a fetch con los parámetros correctos
+    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/contratar/123456789', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        valor,
+      }),
+    });
+
+    // Verificar que se haya mostrado el mensaje correcto
+    expect(global.alert).toHaveBeenCalledWith('Trabajador contratado exitosamente');
+  });
+
+  test('muestra un mensaje de error en caso de una respuesta no exitosa', async () => {
+    // Mockear la función fetch para simular una respuesta no exitosa
+    global.fetch = jest.fn().mockResolvedValue({
+      status: 500,
+      json: jest.fn().mockResolvedValue({}),
+    });
+
+    // Mockear la función alert
+    global.alert = jest.fn();
+
+    // Datos de ejemplo
+    const cedula = '123456789';
+    const valor = 100;
+
+    // Llamar a la función
+    await contratar_trabajador(cedula, valor);
+
+    // Verificar que se haya mostrado el mensaje de error
+    expect(global.alert).toHaveBeenCalledWith('Ha ocurrido un error.');
+  });
+
+  test('maneja errores al enviar la solicitud', async () => {
+    // Mockear la función fetch para simular un error al enviar la solicitud
+    global.fetch = jest.fn().mockRejectedValue(new Error('Error de red'));
+
+    // Mockear la función console.error
+    global.console.error = jest.fn();
+
+    // Datos de ejemplo
+    const cedula = '123456789';
+    const valor = 100;
+
+    // Llamar a la función
+    await contratar_trabajador(cedula, valor);
+
+    // Verificar que se haya mostrado el mensaje de error
+    expect(global.console.error).toHaveBeenCalledWith(new Error('Error de red'));
+  });
+});
+
+
+
 
 
 

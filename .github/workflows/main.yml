@@ -19,5 +19,17 @@ jobs:
         run: npm ci --prefix backend
 
       - name: Run tests on Backend folder
-        run: npm test --prefix backend
+        run: npm run test --prefix backend
+
+      - name: Install dependencies on Frontend folder
+        run: npm ci --prefix forme-app
+
+      - name: Run tests on frontend folder
+        run: npm run test --prefix forme-app
+      
+      - name: Imagen front
+        run: docker build -t front .
+      
+      - name: Imagen Back
+        run: docker build -t back .
         

@@ -121,7 +121,7 @@ function AlertDialog({ cedula }) {
 
     return (
         <div>
-            <Button variant='contained' sx={{ color: '#362900', fontWeight: 'bold', textDecoration: 'underline' }} onClick={handleClickOpen}>
+            <Button data-testid='Ver mas' variant='contained' sx={{ color: '#362900', fontWeight: 'bold', textDecoration: 'underline' }} onClick={handleClickOpen}>
                 Ver mas
             </Button>
             <Dialog

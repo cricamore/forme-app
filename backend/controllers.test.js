@@ -1,5 +1,5 @@
 const pool = require('./src/connection_db'); // Replace with the actual database pool library you're using
-const { addDescription, createCliente, createReview, createTrabajador, getReview, getTrabajador, getTrabajadores, loginCliente, loginTrabajador } = require('./src/controllers/controllers');
+const { addDescription, createCliente, createReview, createTrabajador, getReview, getTrabajador, getTrabajadores, loginCliente, loginTrabajador, getLabor, OcuparTrabajador, getTrabajadorInfo, getTrabajadorFullInfo } = require('./src/controllers/controllers');
 
 // Mock the database pool
 jest.mock('./src/connection_db', () => ({
@@ -676,6 +676,338 @@ describe('createCliente', () => {
       // Assertions
       expect(pool.query).toHaveBeenCalledWith(
         "SELECT * FROM Persona NATURAL JOIN Trabajador AS t WHERE t.cedula='123456789' AND password='password123';"
+      );
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+
+
+
+  describe('getTrabajadorFullInfo', () => {
+    test('should return the full information of all workers', async () => {
+      const queryResult = {
+        rows: [
+          { id: 1, nombre: 'Worker 1' },
+          { id: 2, nombre: 'Worker 2' },
+        ],
+      };
+  
+      pool.query.mockResolvedValueOnce(queryResult);
+  
+      const req = {};
+      const res = {
+        json: jest.fn(),
+      };
+      const next = jest.fn();
+  
+      await getTrabajadorFullInfo(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        'SELECT * FROM Persona NATURAL JOIN Trabajador'
+      );
+      expect(res.json).toHaveBeenCalledWith(queryResult.rows);
+      expect(next).not.toHaveBeenCalled();
+    });
+  
+    test('should pass the error to the next middleware if an error occurs', async () => {
+      const error = new Error('Database error');
+  
+      pool.query.mockRejectedValueOnce(error);
+  
+      const req = {};
+      const res = {};
+      const next = jest.fn();
+  
+      await getTrabajadorFullInfo(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        'SELECT * FROM Persona NATURAL JOIN Trabajador'
+      );
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+  
+  
+  
+  
+  describe('getLabor', () => {
+    test('should return workers for a given labor', async () => {
+      const queryResult = {
+        rows: [
+          { id: 1, nombre: 'Worker 1' },
+          { id: 2, nombre: 'Worker 2' },
+        ],
+      };
+  
+      pool.query.mockResolvedValueOnce(queryResult);
+  
+      const req = {
+        params: {
+          labor: 'Construction',
+        },
+      };
+      const res = {
+        json: jest.fn(),
+      };
+      const next = jest.fn();
+  
+      await getLabor(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        "SELECT * FROM Persona NATURAL JOIN Trabajador NATURAL JOIN Labor WHERE nombreLabor = 'Construction'"
+      );
+      expect(res.json).toHaveBeenCalledWith(queryResult.rows);
+      expect(next).not.toHaveBeenCalled();
+    });
+  
+    test('should return an error response if labor is not found', async () => {
+      const queryResult = {
+        rows: [],
+      };
+  
+      pool.query.mockResolvedValueOnce(queryResult);
+  
+      const req = {
+        params: {
+          labor: 'Invalid Labor',
+        },
+      };
+      const res = {
+        json: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+      };
+      const next = jest.fn();
+  
+      await getLabor(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        "SELECT * FROM Persona NATURAL JOIN Trabajador NATURAL JOIN Labor WHERE nombreLabor = 'Invalid Labor'"
+      );
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'labor no encontrado',
+      });
+      expect(next).not.toHaveBeenCalled();
+    });
+  
+    test('should pass the error to the next middleware if an error occurs', async () => {
+      const error = new Error('Database error');
+  
+  
+      pool.query.mockRejectedValueOnce(error);
+  
+  
+      const req = {
+        params: {
+          labor: 'Construction',
+        },
+      };
+      const res = {};
+      const next = jest.fn();
+  
+      await getLabor(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        "SELECT * FROM Persona NATURAL JOIN Trabajador NATURAL JOIN Labor WHERE nombreLabor = 'Construction'"
+      );
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+  
+  
+  
+  
+  
+  describe('OcuparTrabajador', () => {
+    test('should update and return the updated worker if found', async () => {
+      const queryResult = {
+        rows: [{ id: 1, nombre: 'Worker 1', ocupado: true }],
+      };
+  
+  
+      pool.query.mockResolvedValueOnce(queryResult);
+  
+  
+      const req = {
+        params: {
+          cedula: '123456789',
+        },
+        body: {
+          valor: true,
+        },
+      };
+      const res = {
+        json: jest.fn(),
+      };
+      const next = jest.fn();
+  
+  
+      await OcuparTrabajador(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        'UPDATE trabajador SET ocupado = $1 WHERE cedula = $2 RETURNING *',
+        [true, '123456789']
+      );
+      expect(res.json).toHaveBeenCalledWith(queryResult.rows);
+      expect(next).not.toHaveBeenCalled();
+    });
+  
+    test('should return an error response if worker is not found', async () => {
+      const queryResult = {
+        rows: [],
+      };
+  
+  
+      pool.query.mockResolvedValueOnce(queryResult);
+  
+  
+      const req = {
+        params: {
+          cedula: '123456789',
+        },
+        body: {
+          valor: true,
+        },
+      };
+      const res = {
+        json: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+      };
+      const next = jest.fn();
+  
+  
+      await OcuparTrabajador(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        'UPDATE trabajador SET ocupado = $1 WHERE cedula = $2 RETURNING *',
+        [true, '123456789']
+      );
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'not found',
+      });
+      expect(next).not.toHaveBeenCalled();
+    });
+  
+    test('should pass the error to the next middleware if an error occurs', async () => {
+      // Mock the error
+      const error = new Error('Database error');
+  
+  
+      pool.query.mockRejectedValueOnce(error);
+  
+  
+      const req = {
+        params: {
+          cedula: '123456789',
+        },
+        body: {
+          valor: true,
+        },
+      };
+      const res = {};
+      const next = jest.fn();
+  
+  
+      await OcuparTrabajador(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        'UPDATE trabajador SET ocupado = $1 WHERE cedula = $2 RETURNING *',
+        [true, '123456789']
+      );
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+  
+  
+  
+  
+  
+  describe('getTrabajadorInfo', () => {
+    test('should return a worker if found', async () => {
+      const queryResult = {
+        rows: [{ id: 1, nombre: 'Worker 1' }],
+      };
+  
+      pool.query.mockResolvedValueOnce(queryResult);
+  
+      const req = {
+        params: {
+          cedula: '123456789',
+        },
+      };
+      const res = {
+        json: jest.fn(),
+      };
+      const next = jest.fn();
+  
+      await getTrabajadorInfo(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        "SELECT * FROM Persona NATURAL JOIN Trabajador AS t WHERE t.cedula='123456789'"
+      );
+      expect(res.json).toHaveBeenCalledWith(queryResult.rows[0]);
+      expect(next).not.toHaveBeenCalled();
+    });
+  
+    test('should return an error response if worker is not found', async () => {
+      const queryResult = {
+        rows: [],
+      };
+  
+      pool.query.mockResolvedValueOnce(queryResult);
+  
+      const req = {
+        params: {
+          cedula: '123456789',
+        },
+      };
+      const res = {
+        json: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+      };
+      const next = jest.fn();
+  
+      await getTrabajadorInfo(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        "SELECT * FROM Persona NATURAL JOIN Trabajador AS t WHERE t.cedula='123456789'"
+      );
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'Trabajador no encontrado',
+      });
+      expect(next).not.toHaveBeenCalled();
+    });
+  
+    test('should pass the error to the next middleware if an error occurs', async () => {
+      const error = new Error('Database error');
+  
+      pool.query.mockRejectedValueOnce(error);
+  
+      const req = {
+        params: {
+          cedula: '123456789',
+        },
+      };
+      const res = {};
+      const next = jest.fn();
+  
+      await getTrabajadorInfo(req, res, next);
+  
+      // Assertions
+      expect(pool.query).toHaveBeenCalledWith(
+        "SELECT * FROM Persona NATURAL JOIN Trabajador AS t WHERE t.cedula='123456789'"
       );
       expect(next).toHaveBeenCalledWith(error);
     });

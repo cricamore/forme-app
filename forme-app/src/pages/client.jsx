@@ -34,7 +34,7 @@ export default function Client(props){
     }, []);      
 
     return (
-        <Container maxWidth="xl" sx={{padding:0}}>
+        <Container maxWidth="xl" sx={{padding:0}} data-testid="client">
             <AppBar position="fixed" sx={{ backgroundColor: '#362900', width: '100%', left: 0  }}>
                 <Toolbar disableGutters>
                     <Image src={flag} width='100' height='60' alt="icon"/>

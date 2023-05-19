@@ -6,7 +6,7 @@ describe('Database Connection', () => {
     const expectedOptions = {
       user: 'pgadmin',
       password: 'pg123',
-      host: 'postgres',
+      host: 'localhost',
       port: 5432,
       database: 'mande_db',
     };
@@ -20,7 +20,7 @@ describe('Database Connection', () => {
         const expectedOptions = {
           user: 'pgadmin',
           password: 'pg1234',
-          host: 'postgres',
+          host: 'localhost',
           port: 5432,
           database: 'mande_db',
         };
