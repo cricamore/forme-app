@@ -21,7 +21,7 @@ import {
 import { createTrabjador_Front, createCliente_Front } from '../functions/sqlFunctions'
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
-import styles from '@project/styles/Registro.module.css'
+import styles from '@project/styles/Registro.module.css'  // forme-app\src\styles\Registro.module.css
 import * as Yup from 'yup'
 import Link from 'next/link';
 
@@ -91,7 +91,7 @@ export default function Registro() {
 
     return (
         <div className={styles.miclase}>
-            <Container sx={{ padding: '2%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Container data-testid='container-registro' sx={{ padding: '2%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Box sx={{ borderRadius: '4%', padding: '10%', width: '60%', background: '#F6BE00' }}>
                     <form onSubmit={formik.handleSubmit}>
                         <Stack
