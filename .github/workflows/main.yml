@@ -1,11 +1,11 @@
-name: Check Docker Image
+name: Actiones
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  check-docker-image:
+  actions:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -14,3 +14,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18
+
+      - name: Install dependencies on Backend folder
+        run: npm ci --prefix backend
+
+      - name: Run tests on Backend folder
+        run: npm test --prefix backend
+        
