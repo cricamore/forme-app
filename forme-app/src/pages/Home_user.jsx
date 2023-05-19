@@ -58,7 +58,7 @@ export default function Home_user() {
     }, []);
 
     return (
-        <div style={{ padding: '5rem' }}>
+        <div style={{ padding: '5rem' }} data-testid="home-user">
 
             <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
