@@ -179,11 +179,64 @@ async function trabajadores_Front() {
     }
   }
 
+async function addReview_Front(cedula, resenia) {
+    try {
+        const response = await fetch(`http://localhost:4000/review`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cedula,
+                resenia
+            }),
+        });
+
+        const data = await response.json(); // convierte la respuesta del servidor a JSON
+
+        if(response.status === 200) {
+            alert(data.message);
+        } else {
+            alert("Ha ocurrido un error.");
+        }
+        console.log(data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function getReview_Front(cedula) {
+  try {
+    const response = await fetch(`http://localhost:4000/review?cedula=${cedula}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      const reviewsArray = data.review.map((review, index) => ({ name: 'Usuario', text: review }));
+      console.log("XD " + reviewsArray)
+      return reviewsArray;
+    } else {
+      throw new Error('Failed to fetch review.');
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching the review.');
+  }
+}
+
+
 export {
     createTrabjador_Front,
     createCliente_Front, 
     addDecripcion_Front,
     login_cliente,
     login_trabajador,
-    trabajadores_Front
+    trabajadores_Front,
+    addReview_Front,
+    getReview_Front
 }
