@@ -1,10 +1,8 @@
 const pool = require('../connection_db')
 
 const getTrabajador = async (req, res , next) => {
-    const idTrabajador = req.params.id_trabajador;
     const { cedula, password } = req.body
     try {
-        const idTrabajador = req.params.id_trabajador;
         let sql = `SELECT * FROM Persona NATURAL JOIN Trabajador AS t WHERE t.cedula='${cedula}' AND password='${password}';`
         const result = await pool.query(sql)
         
@@ -23,9 +21,7 @@ const getTrabajador = async (req, res , next) => {
 const createTrabajador = async (req, res , next) => {
     const { cedula, direccion, nombre, apellido, telefono, password } = req.body
     try {
-        let sql = `INSERT INTO Persona VALUES (${cedula}, '${direccion}', '${nombre}', '${apellido}',
-         '${telefono}', '${password}'); 
-         INSERT INTO Trabajador(cedula) VALUES (${cedula});`
+        let sql = `INSERT INTO Persona VALUES (${cedula}, '${direccion}', '${nombre}', '${apellido}', '${telefono}', '${password}'); INSERT INTO Trabajador(cedula) VALUES (${cedula});`
         const result = await pool.query(sql)
         console.log(result)
         
@@ -38,10 +34,7 @@ const createTrabajador = async (req, res , next) => {
 const createCliente = async (req, res , next) => {
     const { cedula, direccion, nombre, apellido, telefono, password, correo } = req.body
     try {
-        let sql = `INSERT INTO Persona VALUES (${cedula}, '${direccion}', '${nombre}', '${apellido}',
-         '${telefono}', '${password}'); 
-         INSERT INTO  Usuario_app(id_telefono, cedula, email) VALUES ('${telefono}', ${cedula}, 
-         '${correo}');`
+        let sql = `INSERT INTO Persona VALUES (${cedula}, '${direccion}', '${nombre}', '${apellido}', '${telefono}', '${password}'); INSERT INTO Usuario_app(id_telefono, cedula, email) VALUES ('${telefono}', ${cedula}, '${correo}');`
         const result = await pool.query(sql)
         console.log(result)
         
@@ -54,8 +47,7 @@ const createCliente = async (req, res , next) => {
 const loginCliente = async (req, res , next) => {
     const { telefono, password } = req.body
     try {
-        let sql =`SELECT * FROM Persona NATURAL JOIN Usuario_app WHERE id_telefono='${telefono}'
-         AND password='${password}';`
+        let sql =`SELECT * FROM Persona NATURAL JOIN Usuario_app WHERE id_telefono='${telefono}' AND password='${password}';`
         
         const result = await pool.query(sql)
         console.log(result)
@@ -74,8 +66,7 @@ const loginCliente = async (req, res , next) => {
 const loginTrabajador = async (req, res , next) => {
     const { cedula, password } = req.body
     try {
-       let sql = `SELECT * FROM Persona NATURAL JOIN Trabajador AS t WHERE 
-        t.cedula='${cedula}' AND password='${password}';`
+       let sql = `SELECT * FROM Persona NATURAL JOIN Trabajador AS t WHERE t.cedula='${cedula}' AND password='${password}';`
         const result = await pool.query(sql)
         console.log(result)
         
@@ -91,7 +82,6 @@ const loginTrabajador = async (req, res , next) => {
     }
 }
 
-
 const addDescription = async (req, res , next) => {
     const { descripcion, cedula } = req.body
     console.log(descripcion, cedula)
@@ -105,6 +95,27 @@ const addDescription = async (req, res , next) => {
         next(error)
     }
 }
+
+const getReview = async (req, res, next) => {
+    const { cedula } = req.query;
+    try {
+      let sql = `SELECT resenia FROM trabajador WHERE cedula = ${cedula};`;
+      const result = await pool.query(sql);
+      console.log(result);
+  
+      if (result.rows.length === 0) {
+        res.json({ review: null }); // No se encontró una reseña para la cédula dada
+      } else {
+        const reseniasConcatenadas = result.rows[0].resenia;
+        const resenias = reseniasConcatenadas.split('|');
+  
+        res.json({ review: resenias }); // Se encontró una reseña para la cédula dada
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+  
 
 const getTrabajadores = async (req, res, next) => {
     try {
@@ -123,6 +134,21 @@ const getTrabajadores = async (req, res, next) => {
     }
 }
 
+const createReview = async (req, res , next) => {
+    const { resenia, cedula } = req.body
+    console.log(resenia, cedula)
+    try {
+        let sql = `UPDATE trabajador SET resenia = CONCAT(resenia, '|${resenia}') WHERE cedula = ${cedula};`
+        const result = await pool.query(sql)
+        console.log(result)
+        
+        res.json({message : 'success.'})
+    }catch (error) {
+        next(error)
+    }
+}
+
+
   
 module.exports = {
     getTrabajador,
@@ -131,6 +157,8 @@ module.exports = {
     addDescription,
     loginCliente,
     loginTrabajador,
-    getTrabajadores
+    getReview,
+    getTrabajadores,
+    createReview
 }
 
