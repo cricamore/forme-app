@@ -45,7 +45,7 @@ const ReviewWindow = () => {
 
 
   return (
-    <Box sx={{ width: '100%', maxWidth: 600, bgcolor: '#362900', p: 2}}>
+    <Box sx={{ width: '100%', maxWidth: 600, bgcolor: '#362900', p: 2}} data-testid="review">
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
         <Typography variant="h6" sx={{ color: 'white' }}>
           Reseñas de usuarios
