@@ -22,7 +22,7 @@ jobs:
         run: npm run test --prefix backend
 
       - name: Install dependencies on Frontend folder
-        run: npm ci --prefix forme-app
+        run: npm ci --force --prefix forme-app
 
       - name: Run tests on frontend folder
         run: npm run test --prefix forme-app
