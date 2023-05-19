@@ -26,10 +26,12 @@ jobs:
 
       - name: Run tests on frontend folder
         run: npm run test --prefix forme-app
+
+      - name: Build Frontend Docker image
+        working-directory: forme-app
+        run: docker build -t front -f Dockerfile .
       
-      - name: Imagen front
-        run: Docker build -t front -f Dockerfile.forme-app
-      
-      - name: Imagen Back
-        run: Docker build -t back -f Dockerfile.backend 
+      - name: Build Backend Docker image
+        working-directory: backend
+        run: docker build -t back -f Dockerfile .
         
