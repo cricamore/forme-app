@@ -19,5 +19,5 @@ jobs:
         run: npm ci --prefix backend
 
       - name: Run tests on Backend folder
-        run: npm run test --prefix backend
+        run: npm run test --detectOpenHandles --prefix backend
         
