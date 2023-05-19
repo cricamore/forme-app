@@ -2,7 +2,7 @@ name: Check Docker Image
 
 on:
   push:
-    branches: [ gitactions ]
+    branches: [ main ]
 
 jobs:
   check-docker-image:

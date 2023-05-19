@@ -24,8 +24,6 @@ function WorkerForm() {
   const router = useRouter()
   const id = router.query.id
 
-  console.log(id)
-
   const [descripcion, setDescripcion] = useState('');
   const [profession, setProfession] = useState('');
 
@@ -37,13 +35,11 @@ function WorkerForm() {
 
 
     onSubmit: (values) => {
-      console.log(formik.values)
       addDecripcion_Front(id, values.descripcion)
 
     }
   });
 
-  console.log(formik.values)
 
   function handleSubmit(event) {
     event.preventDefault();
