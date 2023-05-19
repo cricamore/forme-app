@@ -28,8 +28,8 @@ jobs:
         run: npm run test --prefix forme-app
       
       - name: Imagen front
-        run: docker build -t front -f Dockerfile.forme-app .
+        run: Docker build -t front -f Dockerfile.forme-app
       
       - name: Imagen Back
-        run: docker build -t back -f Dockerfile.backend .
+        run: Docker build -t back -f Dockerfile.backend 
         
