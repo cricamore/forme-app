@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { useState, useEffect } from "react";
 import { AppBar, Badge, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import { AccountCircle, Adb, Notifications } from "@material-ui/icons";
 import flag from '../images/flag.svg'
 import Image from 'next/image';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { trabajadores_Front } from '@project/functions/sqlFunctions';
 import { useFormik } from 'formik';
 
@@ -30,6 +30,7 @@ export default function Client(props){
           const response = await trabajadores_Front();
           setTrabajadores(response);
         }
+        document.title = 'Forme Lobby';
         getTrabajadores();
     }, []);      
 
@@ -67,7 +68,7 @@ export default function Client(props){
                         <AccountCircle />
                     </IconButton>
                     <Menu
-                        id="menu-appbar"
+                        id="menu"
                         anchorEl={anchorEl}
                         anchorOrigin={{
                           vertical: 'bottom',
