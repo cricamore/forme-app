@@ -25,23 +25,17 @@ jobs:
       - name: Install dependencies on Frontend folder
         run: npm i --force --prefix forme-app
 
-      - name: Install dependencies for Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libxss1 libappindicator1 libindicator7
-          sudo apt-get install -y libasound2 libatk-bridge2.0-0 libatk1.0-0 libcups2 libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 libx11-xcb1 libxcb-dri3-0 libxcomposite1 libxdamage1 libxfixes3 libxkbcommon0 libxrandr2 libxshmfence1 libxtst6
+      - name: Update Chrome
+        run: sudo apt-get update && sudo apt-get --only-upgrade install google-chrome-stable
 
       - name: Install ChromeDriver
         run: |
-          sudo apt-get update
-          sudo apt-get install -y wget curl unzip
-          wget -N https://chromedriver.storage.googleapis.com/$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
-          sudo unzip chromedriver_linux64.zip
+          LATEST_CHROMEDRIVER=$(wget -q -O - https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          wget https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
           sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
 
-      - name: Configure Chrome sandboxing
-        run: |
-          sudo sysctl -w kernel.unprivileged_userns_clone=1
 
       - name: Run tests on frontend folder
         run: npm run test --prefix forme-app

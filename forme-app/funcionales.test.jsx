@@ -7,13 +7,14 @@ require("geckodriver");
 const serverUri = "https://forme-app.vercel.app/";
 const appTitle = "Forme Home";
 
-const options = new chrome.Options();
-options.addArguments('--no-sandbox');
-options.addArguments('--disable-dev-shm-usage');
+// const options = new chrome.Options();
+// options.addArguments('--no-sandbox');
+// options.addArguments('--disable-dev-shm-usage');
 
 const browser = new Builder()
   .forBrowser("chrome")
-  .setChromeOptions(options)
+  // .setChromeOptions(options)
+  .setChromeOptions(new chrome.Options().setChromeBinaryPath("/usr/bin/google-chrome"))
   .usingServer()
   .build();
 
