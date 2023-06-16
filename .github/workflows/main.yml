@@ -16,7 +16,16 @@ jobs:
           node-version: 18
       
       - uses: browser-actions/setup-chrome@latest
-      - run: chrome --version
+        with:
+          chrome-version: "latest"
+          
+      - name: Install ChromeDriver
+        run: |
+          LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          curl -sS -o chromedriver_linux64.zip "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Install dependencies on Backend folder
         run: npm ci --prefix backend
