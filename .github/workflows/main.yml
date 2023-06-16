@@ -2,7 +2,7 @@ name: Actiones
 
 on:
   push:
-    branches: [ main ]
+    branches: [ pruebasFuncionales ]
 
 jobs:
   actions:
@@ -15,18 +15,6 @@ jobs:
         with:
           node-version: 18
       
-      - uses: browser-actions/setup-chrome@latest
-        with:
-          chrome-version: "latest"
-          
-      - name: Install ChromeDriver
-        run: |
-          LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          curl -sS -o chromedriver_linux64.zip "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
-
       - name: Install dependencies on Backend folder
         run: npm ci --prefix backend
 
@@ -35,10 +23,12 @@ jobs:
 
       - name: Install dependencies on Frontend folder
         run: npm i --force --prefix forme-app
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@latest
       
-      # - name: Install Chrome
-      #   uses: browser-actions/setup-chrome@latest
-        # run: chrome --version
+      - name: Check Chrome version
+        run: google-chrome-stable --version
 
       - name: Run tests on frontend folder
         run: npm run test --prefix forme-app
@@ -50,4 +40,3 @@ jobs:
       - name: Build Backend Docker image
         working-directory: backend
         run: docker build -t back -f Dockerfile .
-        
