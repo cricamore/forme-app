@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button, List, ListItem, ListItemText, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { addReview_Front,getReview_Front } from '../functions/sqlFunctions';
 import { useFormik } from 'formik';
@@ -6,6 +6,10 @@ import { useFormik } from 'formik';
 const ReviewWindow = () => {
   const [reviews, setReviews] = React.useState([]);
   const [showForm, setShowForm] = React.useState(false);
+
+  useEffect(() => {
+    document.title = 'Review';
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -50,7 +54,7 @@ const ReviewWindow = () => {
         <Typography variant="h6" sx={{ color: 'white' }}>
           Reseñas de usuarios
         </Typography>
-        <Button variant="contained" sx={{ bgcolor: '#F6BE00', '&:hover': { bgcolor: '#FF8A00' } }} onClick={toggleForm}>
+        <Button id="sel-button" variant="contained" sx={{ bgcolor: '#F6BE00', '&:hover': { bgcolor: '#FF8A00' } }} onClick={toggleForm}>
           {showForm ? 'Cerrar' : 'Agregar reseña'}
         </Button>
       </Box>
@@ -70,6 +74,7 @@ const ReviewWindow = () => {
         <DialogContent sx={{bgcolor: '#362900'}}>
           <TextField
             name="resenia"
+            id="sel-rese"
             value={formik.values.resenia}
             label="Reseña"
             fullWidth
@@ -82,7 +87,7 @@ const ReviewWindow = () => {
         </DialogContent>
         <DialogActions sx={{bgcolor:'#362900', alignItems: 'center', justifyContent: 'center'}}>
           <Button onClick={toggleForm} sx={{bgcolor: '#F6BE00', color: 'white', '&:hover': { bgcolor: '#FF8A00' } }}>Cancelar</Button>
-          <Button variant="contained" sx={{ bgcolor: '#F6BE00', '&:hover': { bgcolor: '#FF8A00' } }} onClick={formik.handleSubmit}>
+          <Button id='enviar-reseña' variant="contained" sx={{ bgcolor: '#F6BE00', '&:hover': { bgcolor: '#FF8A00' } }} onClick={formik.handleSubmit}>
             Enviar reseña
           </Button>
         </DialogActions>

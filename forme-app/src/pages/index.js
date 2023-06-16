@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Stack, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from "@mui/material";
@@ -30,7 +30,11 @@ const Login = () => {
 
   const handleChange = (event) => {
     setTipo(event.target.value);
-};
+  };
+
+  useEffect(() => {
+    document.title = 'Forme Home';
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -95,7 +99,7 @@ const Login = () => {
                                             label="Age"
                                             onChange={handleChange}
                                         >
-                                            <MenuItem value={'cliente'}>Cliente</MenuItem>
+                                            <MenuItem id='cliente' value={'cliente'}>Cliente</MenuItem>
                                             <MenuItem value={'trabajador'}>Trabajador</MenuItem>
                                         </Select>
                                     </FormControl>
@@ -123,11 +127,11 @@ const Login = () => {
                   />
                 </div>
                 <br />
-                <Button sx={{ width: '100%' }} variant="contained" type="submit" color="warning">Sign-in</Button>
+                <Button id="sel-button" sx={{ width: '100%' }} variant="contained" type="submit" color="warning">Sign-in</Button>
                 <br />
               </form>
               <Link href='./Registro'>
-                <Button  type="button" color="primary">Register</Button>
+                <Button id="reg-button" type="button" color="primary">Register</Button>
               </Link>
             </Stack>
           </Box>

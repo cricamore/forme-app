@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Grid,
     Container,
@@ -36,7 +36,9 @@ export default function Registro() {
 
     const [tipo, setTipo] = React.useState('');
 
-
+    useEffect(() => {
+        document.title = 'Registro';
+      }, []);
 
 
     const handleChange = (event) => {
@@ -120,7 +122,7 @@ export default function Registro() {
                                             label="Age"
                                             onChange={handleChange}
                                         >
-                                            <MenuItem value={'cliente'}>Cliente</MenuItem>
+                                            <MenuItem id="cliente" value={'cliente'}>Cliente</MenuItem>
                                             <MenuItem value={'trabajador'}>Trabajador</MenuItem>
                                         </Select>
                                     </FormControl>
@@ -128,6 +130,7 @@ export default function Registro() {
                                 <Grid item xs={12}>
                                     <TextField
                                         fullWidth
+                                        id="cedula"
                                         error={formik.errors.cedula && formik.touched.cedula ? true : false}
                                         name="cedula"
                                         label={formik.errors.cedula && formik.touched.cedula ? formik.errors.cedula : "Cédula"}
@@ -141,6 +144,7 @@ export default function Registro() {
                                     <TextField
 
                                         fullWidth
+                                        id="nombre"
                                         error={formik.errors.nombre && formik.touched.nombre ? true : false}
                                         name="nombre"
                                         label={formik.errors.nombre && formik.touched.nombre ? formik.errors.nombre : "Nombre"}
@@ -153,6 +157,7 @@ export default function Registro() {
                                 <Grid item xs={6}>
                                     <TextField
                                         fullWidth
+                                        id="apellido"
                                         error={formik.errors.apellido && formik.touched.apellido ? true : false}
                                         name="apellido"
                                         value={formik.values.apellido}
@@ -164,6 +169,7 @@ export default function Registro() {
                                 <Grid item xs={12}>
                                     <TextField
                                         fullWidth
+                                        id="telefono"
                                         error={formik.errors.telefono && formik.touched.telefono ? true : false}
                                         name="telefono"
                                         label={formik.errors.telefono && formik.touched.telefono ? formik.errors.telefono : "Télefono"}
@@ -175,6 +181,7 @@ export default function Registro() {
                                 <Grid item xs={12}>
                                     <TextField
                                         fullWidth
+                                        id="direccion"
                                         error={formik.errors.direccion && formik.touched.direccion ? true : false}
                                         name="direccion"
                                         label={formik.errors.direccion && formik.touched.direccion ? formik.errors.direccion : "Dirección"}
@@ -187,6 +194,7 @@ export default function Registro() {
                                     <Grid item xs={12}>
                                         <TextField
                                             fullWidth
+                                            id="correo"
                                             error={formik.errors.correo ? true : false}
                                             name="correo"
                                             label={formik.errors.correo ? formik.errors.correo : "correo"}
@@ -202,6 +210,7 @@ export default function Registro() {
                                 <Grid item xs={12}>
                                     <TextField
                                         error={formik.errors.contraseña && formik.touched.contraseña? true : false}
+                                        id="contraseña"
                                         fullWidth
                                         name='contraseña'
                                         label={formik.errors.contraseña && formik.touched.contraseña? formik.errors.contraseña : "Contraseña"}
@@ -237,6 +246,7 @@ export default function Registro() {
                                 </Stack>
                             </Box>
                             <Button
+                                id="registrarme"
                                 type="submit"
                                 variant="contained"
                                 size="large"
@@ -280,7 +290,7 @@ function AlertDialog({ estado }) {
 
     return (
         <div>
-            <Button sx={{ color: '#362900', fontWeight: 'bold', textDecoration: 'underline' }} variant="text" onClick={handleClickOpen}>
+            <Button id='terminos' sx={{ color: '#362900', fontWeight: 'bold', textDecoration: 'underline' }} variant="text" onClick={handleClickOpen}>
                 Terminos y condiciones
             </Button>
             <Dialog
@@ -343,7 +353,7 @@ function AlertDialog({ estado }) {
                 </DialogContent>
                 <DialogActions sx={{ background: '#F6BE00' }}>
                     <Button variant='contained' sx={{ background: '#C52B2B', color: '#fff' }} onClick={handleCloseDenied}>Cancelar</Button>
-                    <Button variant='contained' sx={{ background: '#40931A', color: '#fff' }} onClick={handleCloseAcept} autoFocus>
+                    <Button id='acepto' variant='contained' sx={{ background: '#40931A', color: '#fff' }} onClick={handleCloseAcept} autoFocus>
                         Acepto
                     </Button>
                 </DialogActions>

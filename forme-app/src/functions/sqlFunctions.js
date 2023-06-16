@@ -1,6 +1,9 @@
+
+const endpoint = "forme-app-production.up.railway.app"
+
 async function createTrabjador_Front(cedula, nombre, apellido, telefono, direccion, password) {
     try {
-        const response = await fetch(`http://localhost:4000/registrartrabajador`, {
+        const response = await fetch(`http://${endpoint}/registrartrabajador`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,7 +38,7 @@ async function createTrabjador_Front(cedula, nombre, apellido, telefono, direcci
 
 async function createCliente_Front(cedula, nombre, apellido, telefono, direccion, correo, password) {
     try {
-        const response = await fetch(`http://localhost:4000/registrarcliente`, {
+        const response = await fetch(`http://${endpoint}/registrarcliente`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -72,7 +75,7 @@ async function createCliente_Front(cedula, nombre, apellido, telefono, direccion
 async function addDecripcion_Front(cedula, descripcion) {
     console.log(cedula)
     try {
-        const response = await fetch(`http://localhost:4000/adddescription`, {
+        const response = await fetch(`http://${endpoint}/adddescription`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -103,7 +106,7 @@ async function addDecripcion_Front(cedula, descripcion) {
 async function login_trabajador(cedula, password) {
     console.log(cedula)
     try {
-        const response = await fetch(`http://localhost:4000/logintrabajador`, {
+        const response = await fetch(`http://${endpoint}/logintrabajador`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -134,7 +137,7 @@ async function login_trabajador(cedula, password) {
 async function login_cliente(telefono, password) {
     console.log(telefono, password)
     try {
-        const response = await fetch(`http://localhost:4000/logincliente`, {
+        const response = await fetch(`http://${endpoint}/logincliente`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -165,7 +168,7 @@ async function login_cliente(telefono, password) {
 
 async function trabajadores_Front() {
     try {
-      const response = await fetch(`http://localhost:4000/trabajadores`);
+      const response = await fetch(`http://${endpoint}/trabajadores`);
       const data = await response.json();
   
       if (response.status === 200) {
@@ -181,7 +184,7 @@ async function trabajadores_Front() {
 
 async function addReview_Front(cedula, resenia) {
     try {
-        const response = await fetch(`http://localhost:4000/review`, {
+        const response = await fetch(`http://${endpoint}/review`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -207,7 +210,7 @@ async function addReview_Front(cedula, resenia) {
 
 async function Trabajadores_info() {
     try {
-        const response = await fetch(`http://localhost:4000/trabajadores`)
+        const response = await fetch(`http://${endpoint}/trabajadores`)
         const data = await response.json(); // convierte la respuesta del servidor a JSON
         return data
     } catch (error) {
@@ -218,7 +221,7 @@ async function Trabajadores_info() {
 
 async function contratar_trabajador(cedula,valor) {
     try {
-        const response = await fetch(`http://localhost:4000/contratar/${cedula}`, {
+        const response = await fetch(`http://${endpoint}/contratar/${cedula}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -245,7 +248,7 @@ async function contratar_trabajador(cedula,valor) {
 
 async function getReview_Front(cedula) {
   try {
-    const response = await fetch(`http://localhost:4000/review?cedula=${cedula}`, {
+    const response = await fetch(`http://${endpoint}/review?cedula=${cedula}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -270,7 +273,7 @@ async function getReview_Front(cedula) {
 
 async function get_labor(labor) {
     try {
-        const response = await fetch(`http://localhost:4000/trabajadorLabor/${labor}`, {
+        const response = await fetch(`http://${endpoint}/trabajadorLabor/${labor}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
