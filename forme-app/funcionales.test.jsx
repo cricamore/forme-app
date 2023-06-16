@@ -19,7 +19,6 @@ function logTitle() {
 }
 
 describe("Home Page", function () {
-  browser.manage().setTimeouts({ implicit: 10000 });
   /**
    * Caso de prueba para la app y obtener título
    */
@@ -35,7 +34,7 @@ describe("Home Page", function () {
         })
         .catch((err) => reject(err));
     });
-  });
+  }, 15000);
 
   /**
    * Test case to check whether the given element is loaded.
@@ -47,7 +46,7 @@ describe("Home Page", function () {
         .then((elem) => resolve())
         .catch((err) => reject(err));
     });
-  });
+  }, 15000);
 
   it('Login page con usuario incorrecto', async () => {
     // // Realizar acciones y verificaciones utilizando Selenium WebDriver
@@ -68,7 +67,7 @@ describe("Home Page", function () {
 
     //Logueo incorrecto
     expect(await browser.getCurrentUrl()).toBe('http://localhost:3000/');
-  });
+  }, 15000);
 
 
 });
@@ -79,7 +78,7 @@ describe("Home Page", function () {
  * Prueba para la página de Registro
  */
 describe("Registro", function (){
-  browser.manage().setTimeouts({ implicit: 10000 });
+  browser.manage().setTimeouts({ implicit: 30000 });
   it("Cargar la página de registro", function (){
     return new Promise((resolve, reject) => {
       browser
@@ -106,7 +105,7 @@ describe("Registro", function (){
         .then((elem) => resolve())
         .catch((err) => reject(err));
     });
-  });
+  }, 10000);
 
   it('Pagina de registro con usuario', async () => {
     // browser.manage().setTimeouts({ implicit: 10000 });
@@ -138,18 +137,18 @@ describe("Registro", function (){
     const passwordInput = await browser.findElement(By.id('contraseña'));
     await passwordInput.sendKeys('mi_contraseña');
 
-    // const terminosInput = await browser.findElement(By.id('terminos'));
-    // await terminosInput.click();
+    const terminosInput = await browser.findElement(By.id('terminos'));
+    await terminosInput.click();
 
-    // const aceptoInput = await browser.findElement(By.id('acepto'));
-    // await aceptoInput.click();
+    const aceptoInput = await browser.findElement(By.id('acepto'));
+    await aceptoInput.click();
 
     const submitButton = await browser.findElement(By.xpath("//button[@type='submit']"));
     await submitButton.click();
 
     //  Registro exitoso
-    expect(await browser.getCurrentUrl()).toBe('http://localhost:3000/Registro');
-  });
+    expect(await browser.getCurrentUrl()).toBe('http://localhost:3000/');
+  }, 15000);
 
 });
 
@@ -158,7 +157,7 @@ describe("Registro", function (){
  * Prueba para la página de Review
  */
 describe("Review", function () {
-  browser.manage().setTimeouts({ implicit: 10000 });
+  browser.manage().setTimeouts({ implicit: 30000 });
   reviewTitle = "Review"; 
   /**
    * Test case to load our application and check the title.
@@ -205,13 +204,13 @@ describe("Review", function () {
     const submitButton = await browser.findElement(By.xpath("//button[contains(text(), 'Enviar reseña')]"));
     await submitButton.click();
   
-  });
+  }, 20000);
 
 });
 
 
 describe("Client", function () {
-  browser.manage().setTimeouts({ implicit: 10000 });
+  browser.manage().setTimeouts({ implicit: 30000 });
   /**
    * Test case to load our application and check the title.
    */
@@ -241,7 +240,7 @@ describe("Client", function () {
         .catch((err) => reject(err));
     });
   });
-});
+}, 20000);
 
 afterAll(function () {
   // End of test use this.

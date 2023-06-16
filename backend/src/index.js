@@ -6,6 +6,7 @@ const routes = require('./routes/routes.js');
 const app = express();
 const cors = require('cors');
 
+app.get("/", (req, res) => {res.send("Server is running on port")})
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
