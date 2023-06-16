@@ -8,8 +8,8 @@ const serverUri = "https://forme-app.vercel.app/";
 const appTitle = "Forme Home";
 
 const options = new chrome.Options();
-options.add_argument('--remote-debugging-port=9222')
-options.add_argument('--disable-gpu')
+options.addArguments('--remote-debugging-port=9222')
+options.addArguments('--disable-gpu')
 options.addArguments('--no-sandbox');
 options.addArguments('--disable-dev-shm-usage');
 options.setBinary("/usr/bin/google-chrome");
