@@ -8,8 +8,11 @@ const serverUri = "https://forme-app.vercel.app/";
 const appTitle = "Forme Home";
 
 const options = new chrome.Options();
+chrome_options.add_argument('--remote-debugging-port=9222')
 options.addArguments('--no-sandbox');
 options.addArguments('--disable-dev-shm-usage');
+options.setBinary("/usr/bin/google-chrome");
+
 
 const browser = new Builder()
   .forBrowser("chrome")
