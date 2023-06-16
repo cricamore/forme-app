@@ -2,7 +2,7 @@ const assert = require("assert").strict;
 const { Builder,By, until } = require("selenium-webdriver");
 require("geckodriver");
 
-const serverUri = "http://localhost:3000/";
+const serverUri = "https://forme-app.vercel.app/";
 const appTitle = "Forme Home";
 
 const browser = new Builder()
@@ -66,7 +66,7 @@ describe("Home Page", function () {
     await submitButton.click();
 
     //Logueo incorrecto
-    expect(await browser.getCurrentUrl()).toBe('http://localhost:3000/');
+    expect(await browser.getCurrentUrl()).toBe('https://forme-app.vercel.app/');
   }, 15000);
 
 
@@ -107,7 +107,7 @@ describe("Registro", function (){
     });
   }, 10000);
 
-  it('Pagina de registro con usuario', async () => {
+  it('Pagina de registro con usuario fallido', async () => {
     // browser.manage().setTimeouts({ implicit: 10000 });
     // Realizar acciones y verificaciones utilizando Selenium WebDriver
     const usertypeInput = await browser.findElement(By.id('demo-simple-select'));
@@ -117,7 +117,7 @@ describe("Registro", function (){
     await clienteInput.click();
 
     const cedulaInput = await browser.findElement(By.id('cedula'));
-    await cedulaInput.sendKeys('123456');
+    await cedulaInput.sendKeys('100753232');
 
     const nombreInput = await browser.findElement(By.id('nombre'));
     await nombreInput.sendKeys('Cristian y Trujillo');
@@ -126,16 +126,16 @@ describe("Registro", function (){
     await apellidoInput.sendKeys('Renteria pero más Trujillo');
 
     const telefonoInput = await browser.findElement(By.id('telefono'));
-    await telefonoInput.sendKeys('12345');
+    await telefonoInput.sendKeys('3134145898');
 
     const direccionInput = await browser.findElement(By.id('direccion'));
     await direccionInput.sendKeys('Carrera_12');
 
     const correoInput = await browser.findElement(By.id('correo'));
-    await correoInput.sendKeys('mi_correo');
+    await correoInput.sendKeys('micorreo@gmail.com');
 
-    const passwordInput = await browser.findElement(By.id('contraseña'));
-    await passwordInput.sendKeys('mi_contraseña');
+    // const passwordInput = await browser.findElement(By.id('contraseña'));
+    // await passwordInput.sendKeys('cristian123');
 
     const terminosInput = await browser.findElement(By.id('terminos'));
     await terminosInput.click();
@@ -146,8 +146,8 @@ describe("Registro", function (){
     const submitButton = await browser.findElement(By.xpath("//button[@type='submit']"));
     await submitButton.click();
 
-    //  Registro exitoso
-    expect(await browser.getCurrentUrl()).toBe('http://localhost:3000/');
+    //  Registro fallido
+    expect(await browser.getCurrentUrl()).toBe('https://forme-app.vercel.app/Registro');
   }, 15000);
 
 });

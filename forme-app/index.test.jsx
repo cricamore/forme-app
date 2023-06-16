@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 const { addReview_Front, getReview_Front, createTrabjador_Front,createCliente_Front,addDecripcion_Front,login_trabajador, login_cliente, trabajadores_Front, Trabajadores_info, get_labor,contratar_trabajador } = require('./src/functions/sqlFunctions');
 
+const endpoint = "forme-app-production.up.railway.app"
 
 describe('addReview_Front', () => {
   test('envía una solicitud POST al servidor con los datos proporcionados', async () => {
@@ -21,7 +22,7 @@ describe('addReview_Front', () => {
     await addReview_Front(cedula, resenia);
 
     // Verificar que se haya llamado a fetch con los parámetros correctos
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/review', {
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/review', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -100,7 +101,7 @@ describe('getReview_Front', () => {
     const funcion = await getReview_Front(cedula);
 
     // Verificar que se haya llamado a fetch con los parámetros correctos
-    expect(global.fetch).toHaveBeenCalledWith(`http://localhost:4000/review?cedula=${cedula}`, {
+    expect(global.fetch).toHaveBeenCalledWith(`http://forme-app-production.up.railway.app/review?cedula=${cedula}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -182,7 +183,7 @@ describe('createTrabajador_Front', () => {
 
     await createTrabjador_Front(cedula, nombre, apellido, telefono, direccion, password);
 
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/registrartrabajador', {
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/registrartrabajador', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -271,7 +272,7 @@ describe('createCliente_Front', () => {
     await createCliente_Front(cedula, nombre, apellido, telefono, direccion, correo, password);
 
     // Verificar que se haya llamado a fetch con los parámetros correctos
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/registrarcliente', {
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/registrarcliente', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -364,7 +365,7 @@ describe('addDecripcion_Front', () => {
     await addDecripcion_Front(cedula, descripcion);
 
     // Verificar que se haya llamado a fetch con los parámetros correctos
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/adddescription', {
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/adddescription', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -442,7 +443,7 @@ describe('login_trabajador', () => {
     await login_trabajador(cedula, password);
 
     // Verificar que se haya llamado a fetch con los parámetros correctos
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/logintrabajador', {
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/logintrabajador', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -519,7 +520,7 @@ describe('login_cliente', () => {
     await login_cliente(telefono, password);
 
     // Verificar que se haya llamado a fetch con los parámetros correctos
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/logincliente', {
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/logincliente', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -594,7 +595,7 @@ describe('trabajadores_Front', () => {
     const result = await trabajadores_Front();
 
     // Verificar que se haya llamado a fetch con el URL correcto
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/trabajadores');
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/trabajadores');
 
     // Verificar que se haya devuelto los datos correctos
     expect(result).toEqual([
@@ -656,7 +657,7 @@ describe('Trabajadores_info', () => {
     const result = await Trabajadores_info();
 
     // Verificar que se haya llamado a fetch con el URL correcto
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/trabajadores');
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/trabajadores');
 
     // Verificar que se haya devuelto los datos correctos
     expect(result).toEqual([
@@ -707,7 +708,7 @@ describe('get_labor', () => {
     const result = await get_labor(labor);
 
     // Verificar que se haya llamado a fetch con los parámetros correctos
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/trabajadorLabor/Electricista', {
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/trabajadorLabor/Electricista', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -769,7 +770,7 @@ describe('contratar_trabajador', () => {
     await contratar_trabajador(cedula, valor);
 
     // Verificar que se haya llamado a fetch con los parámetros correctos
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:4000/contratar/123456789', {
+    expect(global.fetch).toHaveBeenCalledWith('http://forme-app-production.up.railway.app/contratar/123456789', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

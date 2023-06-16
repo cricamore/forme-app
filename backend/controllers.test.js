@@ -1,6 +1,7 @@
 const pool = require('./src/connection_db'); // Replace with the actual database pool library you're using
 const { addDescription, createCliente, createReview, createTrabajador, getReview, getTrabajador, getTrabajadores, loginCliente, loginTrabajador, getLabor, OcuparTrabajador, getTrabajadorInfo, getTrabajadorFullInfo } = require('./src/controllers/controllers');
 
+
 // Mock the database pool
 jest.mock('./src/connection_db', () => ({
   query: jest.fn(),
