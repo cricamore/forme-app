@@ -7,6 +7,7 @@ on:
 jobs:
   actions:
     runs-on: ubuntu-latest
+    container: selenium/standalone-chrome:latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -24,18 +25,6 @@ jobs:
 
       - name: Install dependencies on Frontend folder
         run: npm i --force --prefix forme-app
-
-      - name: Update Chrome
-        run: sudo apt-get update && sudo apt-get --only-upgrade install google-chrome-stable
-
-      - name: Install ChromeDriver
-        run: |
-          LATEST_CHROMEDRIVER=$(wget -q -O - https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          wget https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
-
 
       - name: Run tests on frontend folder
         run: npm run test --prefix forme-app
