@@ -1,8 +1,8 @@
-name: Actiones
+name: Actions
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   actions:
@@ -10,22 +10,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 18
-      
-      - uses: browser-actions/setup-chrome@latest
-        with:
-          chrome-version: "latest"
-          
-      - name: Install ChromeDriver
-        run: |
-          LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          curl -sS -o chromedriver_linux64.zip "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Install dependencies on Backend folder
         run: npm ci --prefix backend
@@ -35,10 +24,15 @@ jobs:
 
       - name: Install dependencies on Frontend folder
         run: npm i --force --prefix forme-app
-      
-      # - name: Install Chrome
-      #   uses: browser-actions/setup-chrome@latest
-        # run: chrome --version
+
+      - name: Set up Selenium WebDriver
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+        env:
+            CHROME_BIN: /usr/bin/google-chrome
 
       - name: Run tests on frontend folder
         run: npm run test --prefix forme-app
@@ -46,8 +40,7 @@ jobs:
       - name: Build Frontend Docker image
         working-directory: forme-app
         run: docker build -t front -f Dockerfile .
-      
+
       - name: Build Backend Docker image
         working-directory: backend
         run: docker build -t back -f Dockerfile .
-        
