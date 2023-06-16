@@ -13,3 +13,6 @@ Content-Type: application/json
   "telefono":"3057479788",
   "password":"carlos123"
 }
+
+###
+GET http://localhost:4000/trabajadores HTTP/1.1
