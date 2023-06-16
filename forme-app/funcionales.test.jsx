@@ -12,7 +12,8 @@ options.addArguments('--remote-debugging-port=9222')
 options.addArguments('--disable-gpu')
 options.addArguments('--no-sandbox');
 options.addArguments('--disable-dev-shm-usage');
-options.setBinary("/usr/bin/google-chrome");
+options.addArguments('--headless');
+options.setChromeBinaryPath("/usr/bin/google-chrome");
 
 
 const browser = new Builder()
