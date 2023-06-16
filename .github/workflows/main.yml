@@ -7,7 +7,6 @@ on:
 jobs:
   actions:
     runs-on: ubuntu-latest
-    container: selenium/standalone-chrome:latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -25,6 +24,13 @@ jobs:
 
       - name: Install dependencies on Frontend folder
         run: npm i --force --prefix forme-app
+
+      - name: Set up Selenium WebDriver
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
 
       - name: Run tests on frontend folder
         run: npm run test --prefix forme-app
