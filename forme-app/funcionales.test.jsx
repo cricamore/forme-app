@@ -1,12 +1,19 @@
 const assert = require("assert").strict;
 const { Builder,By, until } = require("selenium-webdriver");
+const chrome = require('selenium-webdriver/chrome');
+
 require("geckodriver");
 
 const serverUri = "https://forme-app.vercel.app/";
 const appTitle = "Forme Home";
 
+const options = new chrome.Options();
+options.addArguments('--no-sandbox');
+options.addArguments('--disable-dev-shm-usage');
+
 const browser = new Builder()
   .forBrowser("chrome")
+  .setChromeOptions(options)
   .usingServer()
   .build();
 
