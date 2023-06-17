@@ -198,7 +198,7 @@ async function addReview_Front(cedula, resenia) {
         const data = await response.json(); // convierte la respuesta del servidor a JSON
 
         if(response.status === 200) {
-            alert(data.message);
+            // alert(data.message);
         } else {
             alert("Ha ocurrido un error.");
         }
