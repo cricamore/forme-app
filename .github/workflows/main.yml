@@ -45,5 +45,6 @@ jobs:
 
       - name: Deploy to Render
         run: |
+          cd backend
           service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
           api-key: ${{ secrets.MY_RENDER_API_KEY }}
