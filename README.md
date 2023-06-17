@@ -33,7 +33,7 @@ El pipeline CI/CD que se maneja en la aplicación se realiza mediante GitHub Act
 ```bash
   npm start
 ```
-# En caso de que tenga docker en su maquina 
+# En caso de que tenga docker, ejecute este comando
 ```bash
   docker-compose up
 ```
