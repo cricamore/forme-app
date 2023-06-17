@@ -1,5 +1,5 @@
 
-const endpoint = "backend-lbkq.onrender.com"
+const endpoint = "forme-app-production.up.railway.app"
 
 async function createTrabjador_Front(cedula, nombre, apellido, telefono, direccion, password) {
     try {
