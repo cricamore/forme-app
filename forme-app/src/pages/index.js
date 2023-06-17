@@ -85,7 +85,7 @@ const Login = () => {
             >
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingRight: '40px' }}>
                 <Image src={flag} width='100' height='60' alt="icon"/>
-                <Typography variant="h2" sx={{ color: '#fff', fontWeight: 'bold' }}>FUNCIONO</Typography>
+                <Typography variant="h2" sx={{ color: '#fff', fontWeight: 'bold' }}>Login</Typography>
               </Box>
               <Image src={user} width='200' height='100'alt='icon2' />
 

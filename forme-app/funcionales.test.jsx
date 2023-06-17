@@ -146,8 +146,8 @@ describe("Registro", function () {
     const correoInput = await browser.findElement(By.id('correo'));
     await correoInput.sendKeys('micorreo@gmail.com');
 
-    // const passwordInput = await browser.findElement(By.id('contraseña'));
-    // await passwordInput.sendKeys('cristian123');
+    const passwordInput = await browser.findElement(By.id('contraseña'));
+    await passwordInput.sendKeys('cristian123');
 
     const terminosInput = await browser.findElement(By.id('terminos'));
     await terminosInput.click();
@@ -159,7 +159,7 @@ describe("Registro", function () {
     await submitButton.click();
 
   //  Registro fallido
-  expect(await browser.getCurrentUrl()).toBe('https://forme-app.vercel.app/hola');
+  expect(await browser.getCurrentUrl()).toBe('https://forme-app.vercel.app/Registro');
 }, 15000);
 
 
