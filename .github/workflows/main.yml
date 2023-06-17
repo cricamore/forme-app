@@ -43,7 +43,4 @@ jobs:
           cd forme-app
           npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Deploy to Render
-        run: |
-          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
-          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          
