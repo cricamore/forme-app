@@ -1,5 +1,5 @@
 const assert = require("assert").strict;
-const { Builder,By, until } = require("selenium-webdriver");
+const { Builder, By, until } = require("selenium-webdriver");
 const chrome = require('selenium-webdriver/chrome');
 
 require("chromedriver");
@@ -7,18 +7,18 @@ require("chromedriver");
 const serverUri = "https://forme-app.vercel.app/";
 const appTitle = "Forme Home";
 
-const options = new chrome.Options();
-options.addArguments('--remote-debugging-port=9222')
-options.addArguments('--disable-gpu')
-options.addArguments('--no-sandbox');
-options.addArguments('--disable-dev-shm-usage');
-options.addArguments('--headless');
-options.setChromeBinaryPath("/usr/bin/google-chrome");
+// const options = new chrome.Options();
+// options.addArguments('--remote-debugging-port=9222')
+// options.addArguments('--disable-gpu')
+// options.addArguments('--no-sandbox');
+// options.addArguments('--disable-dev-shm-usage');
+// options.addArguments('--headless');
+// options.setChromeBinaryPath("/usr/bin/google-chrome");
 
 
 const browser = new Builder()
   .forBrowser("chrome")
-  .setChromeOptions(options)
+  // .setChromeOptions(options)
   .usingServer()
   .build();
 
@@ -67,7 +67,7 @@ describe("Home Page", function () {
 
     const clienteInput = await browser.findElement(By.id('cliente'));
     await clienteInput.click();
-    
+
     const userInput = await browser.findElement(By.id('email'));
     await userInput.sendKeys('mi_usuario');
 
@@ -89,12 +89,12 @@ describe("Home Page", function () {
 /**
  * Prueba para la página de Registro
  */
-describe("Registro", function (){
+describe("Registro", function () {
   browser.manage().setTimeouts({ implicit: 30000 });
-  it("Cargar la página de registro", function (){
+  it("Cargar la página de registro", function () {
     return new Promise((resolve, reject) => {
       browser
-        .get(serverUri+"/Registro")
+        .get(serverUri + "/Registro")
         .then(() => browser.wait(until.titleIs("Registro"), 20000))
         // .manage().setTimeouts({ implicit: 10000 })
         .then(logTitle)
@@ -158,9 +158,10 @@ describe("Registro", function (){
     const submitButton = await browser.findElement(By.xpath("//button[@type='submit']"));
     await submitButton.click();
 
-    //  Registro fallido
-    expect(await browser.getCurrentUrl()).toBe('https://forme-app.vercel.app/Registro');
-  }, 15000);
+  //  Registro fallido
+  expect(await browser.getCurrentUrl()).toBe('https://forme-app.vercel.app/hola');
+}, 15000);
+
 
 });
 
@@ -170,14 +171,14 @@ describe("Registro", function (){
  */
 describe("Review", function () {
   browser.manage().setTimeouts({ implicit: 30000 });
-  reviewTitle = "Review"; 
+  reviewTitle = "Review";
   /**
    * Test case to load our application and check the title.
    */
   it("Cargar la página y obtener el título", function () {
     return new Promise((resolve, reject) => {
       browser
-        .get(serverUri+"/Review")
+        .get(serverUri + "/Review")
         .then(() => browser.wait(until.titleIs(reviewTitle), 20000))
         .then(logTitle)
         .then((title) => {
@@ -187,7 +188,7 @@ describe("Review", function () {
         .catch((err) => reject(err));
     });
 
-  
+
   });
 
   /**
@@ -212,10 +213,10 @@ describe("Review", function () {
 
     const enviarreseniaInput = await browser.findElement(By.id('enviar-reseña'));
     await enviarreseniaInput.click();
-  
+
     const submitButton = await browser.findElement(By.xpath("//button[contains(text(), 'Enviar reseña')]"));
     await submitButton.click();
-  
+
   }, 20000);
 
 });
@@ -229,7 +230,7 @@ describe("Client", function () {
   it("Cargar la página y obtener el título", function () {
     return new Promise((resolve, reject) => {
       browser
-        .get(serverUri+"/client")
+        .get(serverUri + "/client")
         .then(() => browser.wait(until.titleIs('Forme Lobby'), 20000))
         // .manage().setTimeouts({ implicit: 10000 })
         .then(logTitle)
@@ -258,3 +259,49 @@ afterAll(function () {
   // End of test use this.
   browser.quit();
 });
+
+// async function testCreateTrabajador_Front() {
+//   // Configurar el navegador Selenium
+//   const options = new chrome.Options();
+//   // Opcionalmente, puedes configurar opciones adicionales para el navegador
+
+//   const driver = await new Builder()
+//     .forBrowser('chrome')
+//     .setChromeOptions(options)
+//     .build();
+
+//   try {
+//     // Navegar a la página de registro
+//     await driver.get('http://forme-app-production.up.railway.app/registro');
+
+//     // Rellenar los campos del formulario
+//     await driver.findElement(By.id('cedula')).sendKeys('cedula');
+//     await driver.findElement(By.id('nombre')).sendKeys('nombre');
+//     await driver.findElement(By.id('apellido')).sendKeys('apellido');
+//     await driver.findElement(By.id('telefono')).sendKeys('telefono');
+//     await driver.findElement(By.id('direccion')).sendKeys('direccion');
+//     await driver.findElement(By.id('password')).sendKeys('password');
+
+//     // Enviar el formulario
+//     await driver.findElement(By.id('submit-btn')).click();
+
+//     // Esperar a que aparezca el mensaje de éxito
+//     await driver.wait(
+//       async () => {
+//         const alert = await driver.findElement(By.id('success-alert'));
+//         return await alert.isDisplayed();
+//       },
+//       5000,
+//       'El mensaje de éxito no apareció.'
+//     );
+
+//     console.log('Prueba exitosa: Trabajador registrado correctamente');
+//   } catch (error) {
+//     console.error('Error durante la prueba:', error);
+//   } finally {
+//     // Cerrar el navegador
+//     await driver.quit();
+//   }
+// }
+
+// testCreateTrabajador_Front();
