@@ -7,18 +7,18 @@ require("chromedriver");
 const serverUri = "https://forme-app.vercel.app/";
 const appTitle = "Forme Home";
 
-// const options = new chrome.Options();
-// options.addArguments('--remote-debugging-port=9222')
-// options.addArguments('--disable-gpu')
-// options.addArguments('--no-sandbox');
-// options.addArguments('--disable-dev-shm-usage');
-// options.addArguments('--headless');
-// options.setChromeBinaryPath("/usr/bin/google-chrome");
+const options = new chrome.Options();
+options.addArguments('--remote-debugging-port=9222')
+options.addArguments('--disable-gpu')
+options.addArguments('--no-sandbox');
+options.addArguments('--disable-dev-shm-usage');
+options.addArguments('--headless');
+options.setChromeBinaryPath("/usr/bin/google-chrome");
 
 
 const browser = new Builder()
   .forBrowser("chrome")
-  // .setChromeOptions(options)
+  .setChromeOptions(options)
   .usingServer()
   .build();
 
