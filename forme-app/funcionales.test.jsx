@@ -132,7 +132,7 @@ describe("Registro", function () {
     await cedulaInput.sendKeys('100753232');
 
     const nombreInput = await browser.findElement(By.id('nombre'));
-    await nombreInput.sendKeys('Cristian y Trujillo');
+    await nombreInput.sendKeys('Cristian');
 
     const apellidoInput = await browser.findElement(By.id('apellido'));
     await apellidoInput.sendKeys('Renteria pero más Trujillo');
