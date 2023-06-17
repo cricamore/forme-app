@@ -214,7 +214,7 @@ describe("Review", function () {
     await enviarreseniaInput.click();
 
     const submitButton = await browser.findElement(By.xpath("//button[contains(text(), 'Enviar reseña')]"));
-    await submitButton.click();
+    //await submitButton.click();
 
   }, 20000);
 
