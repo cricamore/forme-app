@@ -7,9 +7,9 @@ Está construida a partir del stack PERN (PostgreSQL, Express, React, Node.js). 
 # Diseño del sistema DevOps
 
 
-El pipeline CI/CD que se maneja en la aplicación se realiza mediante GitHub Actions. Establecimos un archivo .yaml que ejecuta una serie de tareas cada vez que se realiza un push a la rama main. Al ocurrir este evento, se ejecutan una serie de tareas en un entorno virtual de Linux. Se clona el repositorio y se instalan todas las dependencias necesarias para la ejecución del proyecto. Una vez que esto sucede, se ejecutan pruebas unitarias, de integración y funcionales para validar el correcto funcionamiento de la aplicación. Solo si estas pruebas pasan, se despliega la aplicación frontend en el servicio de Vercel y el backend en el servicio de Render. En caso de que una prueba falle, no se desplegarán los cambios aplicados a la rama y el despliegue se quedará con el último commit con el despliegue exitoso.
+El pipeline CI/CD que se maneja en la aplicación se realiza mediante GitHub Actions. Establecimos un archivo .yaml que ejecuta una serie de tareas cada vez que se realiza un push a la rama main. Al ocurrir este evento, se ejecutan una serie de tareas en un entorno virtual de Linux. Se clona el repositorio y se instalan todas las dependencias necesarias para la ejecución del proyecto. Una vez que esto sucede, se ejecutan pruebas unitarias, de integración y funcionales para validar el correcto funcionamiento de la aplicación. Solo si estas pruebas pasan, se despliega la aplicación frontend en el servicio de Vercel y el backend en el servicio de Railway. En caso de que una prueba falle, no se desplegarán los cambios aplicados a la rama y el despliegue se quedará con el último commit con el despliegue exitoso.
 
-# Siga este paso a paso para instalar la aplicacion
+# Siga este paso a paso para instalar la aplicacion localmente
 
 ### 1. Ingrese a la ruta del backend e instale dependencias
 ```bash
@@ -33,3 +33,8 @@ El pipeline CI/CD que se maneja en la aplicación se realiza mediante GitHub Act
 ```bash
   npm start
 ```
+# En caso de que tenga docker en su maquina 
+```bash
+  docker-compose up
+```
+
