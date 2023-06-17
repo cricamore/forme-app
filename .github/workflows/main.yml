@@ -44,3 +44,7 @@ jobs:
       - name: Build Backend Docker image
         working-directory: backend
         run: docker build -t back -f Dockerfile .
+
+      - name: Deploy to Vercel
+        if: ${{ success() }}
+        run: vercel --prod
