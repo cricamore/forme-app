@@ -39,4 +39,6 @@ jobs:
 
       - name: Deploy to Vercel
         if: ${{ success() }}
-        run: vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          cd forme-app
+          npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
