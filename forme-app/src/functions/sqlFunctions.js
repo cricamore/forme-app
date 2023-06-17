@@ -57,7 +57,7 @@ async function createCliente_Front(cedula, nombre, apellido, telefono, direccion
         const data = await response.json(); // convierte la respuesta del servidor a JSON
 
         if(response.status === 200) {
-            // alert(data.message);
+            alert(data.message);
             return data.message
         } else {
             alert("Ha ocurrido un error.");
