@@ -21,7 +21,7 @@ async function createTrabjador_Front(cedula, nombre, apellido, telefono, direcci
         const data = await response.json(); // convierte la respuesta del servidor a JSON
 
         if(response.status === 200) {
-            // alert(data.message);
+            alert(data.message);
             return data.message
         } else {
             alert("Ha ocurrido un error.");
@@ -89,7 +89,7 @@ async function addDecripcion_Front(cedula, descripcion) {
         const data = await response.json(); // convierte la respuesta del servidor a JSON
 
         if(response.status === 200) {
-            // alert(data.message);
+            alert(data.message);
         } else {
             alert("Ha ocurrido un error.");
         }
@@ -120,7 +120,7 @@ async function login_trabajador(cedula, password) {
         const data = await response.json(); // convierte la respuesta del servidor a JSON
 
         if(response.status === 200) {
-            // alert(data.message);
+            alert(data.message);
         } else {
             alert("Ha ocurrido un error.");
         }
@@ -151,7 +151,7 @@ async function login_cliente(telefono, password) {
         const data = await response.json(); // convierte la respuesta del servidor a JSON
 
         if(response.status === 200) {
-            // alert(data.message);
+            alert(data.message);
             return data.message
         } else {
             alert("Ha ocurrido un error.");
@@ -198,7 +198,7 @@ async function addReview_Front(cedula, resenia) {
         const data = await response.json(); // convierte la respuesta del servidor a JSON
 
         if(response.status === 200) {
-            // alert(data.message);
+            alert(data.message);
         } else {
             alert("Ha ocurrido un error.");
         }
@@ -232,7 +232,7 @@ async function contratar_trabajador(cedula,valor) {
         });
         const data = await response.json(); // convierte la respuesta del servidor a JSON
         if(response.status === 200) {
-            // alert(data.message);
+            alert(data.message);
             // return data.message
         } else {
             alert("Ha ocurrido un error.");
