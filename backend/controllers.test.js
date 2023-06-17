@@ -53,7 +53,7 @@ describe('createCliente', () => {
       // Set up the request and response objects
       const req = {
         body: {
-          // cedula: '123456789',
+          cedula: '123456789',
           direccion: 'Calle 123',
           nombre: 'John',
           apellido: 'Doe',
