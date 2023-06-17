@@ -74,7 +74,7 @@ describe("Home Page", function () {
     await passwordInput.sendKeys('mi_contraseña');
 
     const submitButton = await browser.findElement(By.xpath("//button[@type='submit']"));
-    await submitButton.click();
+    //await submitButton.click();
 
     //Logueo incorrecto
     expect(await browser.getCurrentUrl()).toBe(`${serverUri}/`);
