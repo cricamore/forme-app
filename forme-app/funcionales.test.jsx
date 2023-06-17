@@ -7,18 +7,18 @@ require("chromedriver");
 const serverUri = "https://forme-app.vercel.app/";
 const appTitle = "Forme Home";
 
-const options = new chrome.Options();
-options.addArguments('--remote-debugging-port=9222')
-options.addArguments('--disable-gpu')
-options.addArguments('--no-sandbox');
-options.addArguments('--disable-dev-shm-usage');
-options.addArguments('--headless');
-options.setChromeBinaryPath("/usr/bin/google-chrome");
+// const options = new chrome.Options();
+// options.addArguments('--remote-debugging-port=9222')
+// options.addArguments('--disable-gpu')
+// options.addArguments('--no-sandbox');
+// options.addArguments('--disable-dev-shm-usage');
+// options.addArguments('--headless');
+// options.setChromeBinaryPath("/usr/bin/google-chrome");
 
 
 const browser = new Builder()
   .forBrowser("chrome")
-  .setChromeOptions(options)
+  // .setChromeOptions(options)
   .usingServer()
   .build();
 
@@ -146,8 +146,8 @@ describe("Registro", function () {
     const correoInput = await browser.findElement(By.id('correo'));
     await correoInput.sendKeys('micorreo@gmail.com');
 
-    // const passwordInput = await browser.findElement(By.id('contraseña'));
-    // await passwordInput.sendKeys('cristian123');
+    const passwordInput = await browser.findElement(By.id('contraseña'));
+    await passwordInput.sendKeys('cristian123');
 
     const terminosInput = await browser.findElement(By.id('terminos'));
     await terminosInput.click();
@@ -159,7 +159,7 @@ describe("Registro", function () {
     await submitButton.click();
 
   //  Registro fallido
-  expect(await browser.getCurrentUrl()).toBe('https://forme-app.vercel.app/hola');
+  expect(await browser.getCurrentUrl()).toBe('https://forme-app.vercel.app/Registro');
 }, 15000);
 
 
