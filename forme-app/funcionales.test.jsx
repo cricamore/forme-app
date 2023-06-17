@@ -18,7 +18,7 @@ options.setChromeBinaryPath("/usr/bin/google-chrome");
 
 const browser = new Builder()
   .forBrowser("chrome")
-  // .setChromeOptions(options)
+  .setChromeOptions(options)
   .usingServer()
   .build();
 
