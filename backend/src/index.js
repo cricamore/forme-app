@@ -1,5 +1,6 @@
 // Archivo principal (index.js)
 
+const port = process.env.PORT || 4000;
 const express = require('express');
 const morgan = require('morgan');
 const routes = require('./routes/routes.js');
@@ -20,7 +21,7 @@ app.use((err, req, res, next) => {
 let server; // Variable para almacenar el servidor
 
 if (process.env.NODE_ENV !== 'test') {
-  server = app.listen(4000, () => {
+  server = app.listen(port, () => {
     console.log('Server estoy en port 4000');
   });
 }
