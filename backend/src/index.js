@@ -1,6 +1,6 @@
 // Archivo principal (index.js)
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 const express = require('express');
 const morgan = require('morgan');
 const routes = require('./routes/routes.js');
